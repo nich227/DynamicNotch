@@ -56,9 +56,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resources/LottieImage/confirm.json,
-				Resources/LottieImage/money.json,
-				Resources/LottieImage/star.json,
-				Resources/LottieImage/telegram.json,
 				Resources/Sounds/DynamicNotch_lock.caf,
 				Resources/Sounds/DynamicNotch_unlock.caf,
 				Resources/Sounds/LowBatterySound.mp3,
@@ -69,9 +66,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resources/LottieImage/confirm.json,
-				Resources/LottieImage/money.json,
-				Resources/LottieImage/star.json,
-				Resources/LottieImage/telegram.json,
 				Resources/Sounds/DynamicNotch_lock.caf,
 				Resources/Sounds/DynamicNotch_unlock.caf,
 				Resources/Sounds/LowBatterySound.mp3,

@@ -1802,17 +1802,6 @@
         }
       }
     },
-    "notch.onboarding.openGitHub": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open GitHub"
-          }
-        }
-      }
-    },
     "notch.onboarding.openSettings": {
       "extractionState": "manual",
       "localizations": {
@@ -1820,17 +1809,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Open Settings"
-          }
-        }
-      }
-    },
-    "notch.onboarding.openTelegram": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open Telegram"
           }
         }
       }
@@ -1853,50 +1831,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Confirm all permissions"
-          }
-        }
-      }
-    },
-    "notch.onboarding.step3.desc": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Give it a star on GitHub. It really helps the project."
-          }
-        }
-      }
-    },
-    "notch.onboarding.step3.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Support this app"
-          }
-        }
-      }
-    },
-    "notch.onboarding.step4.desc": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Join the Telegram channel to stay up to date."
-          }
-        }
-      }
-    },
-    "notch.onboarding.step4.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Telegram channel"
           }
         }
       }
@@ -2319,28 +2253,6 @@
         }
       }
     },
-    "settings.about.card.contact": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Contact Me"
-          }
-        }
-      }
-    },
-    "settings.about.card.socialLinks": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Social Links"
-          }
-        }
-      }
-    },
     "settings.about.description": {
       "extractionState": "manual",
       "localizations": {
@@ -2352,35 +2264,13 @@
         }
       }
     },
-    "settings.about.email.desc": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Send an email"
-          }
-        }
-      }
-    },
-    "settings.about.email.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Email Address"
-          }
-        }
-      }
-    },
     "settings.about.github.desc": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Star the project on GitHub"
+            "value": "View the source on GitHub"
           }
         }
       }
@@ -2392,72 +2282,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "GitHub Repository"
-          }
-        }
-      }
-    },
-    "settings.about.telegramAccount.desc": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Send a direct message on Telegram"
-          }
-        }
-      }
-    },
-    "settings.about.telegramAccount.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Telegram Account"
-          }
-        }
-      }
-    },
-    "settings.about.telegramChannel.desc": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Join our Telegram channel"
-          }
-        }
-      }
-    },
-    "settings.about.telegramChannel.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Telegram Channel"
-          }
-        }
-      }
-    },
-    "settings.about.website.desc": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open the DynamicNotch website"
-          }
-        }
-      }
-    },
-    "settings.about.website.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Website"
           }
         }
       }
@@ -4724,28 +4548,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "The selected display is unavailable right now. DynamicNotch is temporarily following the main display."
-          }
-        }
-      }
-    },
-    "settings.general.support.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Support the project's development with a donation."
-          }
-        }
-      }
-    },
-    "settings.general.support.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Support"
           }
         }
       }
@@ -8919,116 +8721,6 @@
         }
       }
     },
-    "settings.support.bitcoin.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bitcoin (BTC)"
-          }
-        }
-      }
-    },
-    "settings.support.boosty.desc": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Support development or subscribe"
-          }
-        }
-      }
-    },
-    "settings.support.boosty.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Boosty.to"
-          }
-        }
-      }
-    },
-    "settings.support.card.cryptocurrency": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cryptocurrency"
-          }
-        }
-      }
-    },
-    "settings.support.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DynamicNotch is a free, open-source project. If you like the app, support its development! Donations help the project continue."
-          }
-        }
-      }
-    },
-    "settings.support.donationAlerts.desc": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "One-time donation by card or crypto"
-          }
-        }
-      }
-    },
-    "settings.support.donationAlerts.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Donation Alerts"
-          }
-        }
-      }
-    },
-    "settings.support.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Support DynamicNotch"
-          }
-        }
-      }
-    },
-    "settings.support.usdtErc20.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "USDT (ERC-20)"
-          }
-        }
-      }
-    },
-    "settings.support.usdtTrc20.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "USDT (TRC-20)"
-          }
-        }
-      }
-    },
     "settings.system.dockIcon.desc": {
       "extractionState": "manual",
       "localizations": {
@@ -10728,6 +10420,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "© 2026 Kevin Chen. Based on DynamicNotch, © 2025 jackson-storm. Released under the GNU GPL v3."
+          }
+        }
+      }
+    },
+    "settings.about.card.source": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source code"
           }
         }
       }

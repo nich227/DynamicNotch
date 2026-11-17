@@ -10,8 +10,6 @@ import SwiftUI
 enum OnboardingSteps: String, Equatable, CaseIterable {
     case first
     case second
-    case third
-    case fourth
     
     static let stackID = NotchContentRegistry.Onboarding.stackID
     
@@ -30,10 +28,6 @@ enum OnboardingSteps: String, Equatable, CaseIterable {
             .init(width: baseWidth + 70, height: baseHeight + 110)
         case .second:
             .init(width: baseWidth + 160, height: baseHeight + 140)
-        case .third:
-            .init(width: baseWidth + 160, height: baseHeight + 140)
-        case .fourth:
-            .init(width: baseWidth + 160, height: baseHeight + 140)
         }
     }
     
@@ -42,10 +36,6 @@ enum OnboardingSteps: String, Equatable, CaseIterable {
         case .first:
             .init(width: baseWidth + 180, height: baseHeight + 100)
         case .second:
-            .init(width: baseWidth + 250, height: baseHeight + 130)
-        case .third:
-            .init(width: baseWidth + 250, height: baseHeight + 130)
-        case .fourth:
             .init(width: baseWidth + 250, height: baseHeight + 130)
         }
     }

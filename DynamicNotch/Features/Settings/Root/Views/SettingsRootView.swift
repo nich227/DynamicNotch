@@ -242,7 +242,7 @@ struct SettingsRootView: View {
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("SelectSettingsSubPage"))) { notification in
             if let subPage = notification.object as? SettingsSubPage {
                 switch subPage {
-                case .about, .softwareUpdate, .support:
+                case .about, .softwareUpdate:
                     applySelection(.about, origin: .sidebar)
                 case .permissions:
                     applySelection(.permissions, origin: .sidebar)
@@ -608,12 +608,6 @@ struct SettingsRootView: View {
             PermissionsSettingsView(permissionController: permissionController, applicationSettings: settingsViewModel.application)
         case .softwareUpdate:
             SoftwareUpdateSettingsView()
-        case .support:
-            SupportSettingsView(
-                onRequestInternetAccess: {
-                    notchEventCoordinator.requestInternetAccess()
-                }
-            )
         case .about:
             AboutAppSettingsView(
                 applicationSettings: settingsViewModel.application,
