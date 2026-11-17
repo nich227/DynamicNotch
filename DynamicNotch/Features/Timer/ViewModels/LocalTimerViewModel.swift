@@ -59,7 +59,11 @@ class LocalTimerViewModel: ObservableObject {
             .sink { [weak self] _ in
                 guard let self = self else { return }
                 let rem = self.remainingTime(at: Date())
-                self.remainingTime = rem
+                // Only the whole-second display reads the published value. Views draw progress from
+                // endDate.
+                if rem <= 0 || ceil(rem) != ceil(self.remainingTime) {
+                    self.remainingTime = rem
+                }
                 if rem <= 0 {
                     self.timerFinished()
                 }
