@@ -48,7 +48,7 @@ final class MediaRemoteNowPlayingService: NowPlayingMonitoring, NowPlayingDetail
     private var process: Process?
     private var outputPipe: Pipe?
     private var errorPipe: Pipe?
-    private var outputBuffer = ""
+    private var outputBuffer = NewlineDelimitedBuffer()
     private var lastSnapshot: NowPlayingSnapshot?
     private var favoriteRefreshTask: Task<Void, Never>?
     private var favoriteRefreshKey: String?
@@ -92,7 +92,7 @@ final class MediaRemoteNowPlayingService: NowPlayingMonitoring, NowPlayingDetail
         process = nil
         outputPipe = nil
         errorPipe = nil
-        outputBuffer = ""
+        outputBuffer = NewlineDelimitedBuffer()
 
         favoriteRefreshTask?.cancel()
         favoriteRefreshTask = nil
@@ -193,7 +193,7 @@ private extension MediaRemoteNowPlayingService {
         self.process = process
         self.outputPipe = outputPipe
         self.errorPipe = errorPipe
-        self.outputBuffer = ""
+        self.outputBuffer = NewlineDelimitedBuffer()
 
         startReadingOutput(from: outputPipe)
         startReadingErrors(from: errorPipe)
@@ -236,24 +236,16 @@ private extension MediaRemoteNowPlayingService {
     }
 
     func consumeOutputData(_ data: Data) {
-        guard let chunk = String(data: data, encoding: .utf8), !chunk.isEmpty else {
+        guard !data.isEmpty else {
             return
         }
 
-        outputBuffer.append(chunk)
-
-        while let lineBreak = outputBuffer.firstIndex(of: "\n") {
-            let line = String(outputBuffer[..<lineBreak])
-            outputBuffer.removeSubrange(...lineBreak)
-
-            guard !line.isEmpty else { continue }
+        for line in outputBuffer.append(data) {
             processAdapterLine(line)
         }
     }
 
-    func processAdapterLine(_ line: String) {
-        guard let data = line.data(using: .utf8) else { return }
-
+    func processAdapterLine(_ data: Data) {
         do {
             let message = try decoder.decode(AdapterStreamMessage.self, from: data)
             guard message.type == nil || message.type == "data" else { return }
@@ -271,7 +263,7 @@ private extension MediaRemoteNowPlayingService {
         process = nil
         outputPipe = nil
         errorPipe = nil
-        outputBuffer = ""
+        outputBuffer = NewlineDelimitedBuffer()
 
         guard isMonitoring else { return }
 
@@ -544,9 +536,40 @@ private extension MediaRemoteNowPlayingService {
         guard let base64String else { return nil }
 
         return Data(
-            base64Encoded: base64String.trimmingCharacters(in: .whitespacesAndNewlines),
+            base64Encoded: base64String,
             options: .ignoreUnknownCharacters
         )
+    }
+}
+
+/// Splits a byte stream into non-empty newline-terminated lines, keeping a partial trailing line.
+nonisolated struct NewlineDelimitedBuffer {
+    private var bytes = Data()
+    // Bytes before scanOffset were already searched and contain no line break.
+    private var scanOffset = 0
+
+    mutating func append(_ data: Data) -> [Data] {
+        bytes.append(data)
+
+        var lines: [Data] = []
+        var lineStart = bytes.startIndex
+        var searchStart = bytes.startIndex + scanOffset
+
+        while let lineBreak = bytes[searchStart...].firstIndex(of: 0x0A) {
+            let line = bytes[lineStart..<lineBreak]
+            lineStart = bytes.index(after: lineBreak)
+            searchStart = lineStart
+
+            if !line.isEmpty {
+                lines.append(Data(line))
+            }
+        }
+
+        if lineStart > bytes.startIndex {
+            bytes = Data(bytes[lineStart...])
+        }
+        scanOffset = bytes.count
+        return lines
     }
 }
 
