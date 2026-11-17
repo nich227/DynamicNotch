@@ -487,35 +487,6 @@ final class NotchEventCoordinatorIntegrationTests: XCTestCase {
         XCTAssertEqual(liveActivityID, NotchContentRegistry.Media.nowPlaying.id)
     }
 
-    func testDownloadEventsShowAndHideLiveActivity() async {
-        let context = makeContext()
-
-        context.downloadMonitor.publish([
-            DownloadModel(
-                url: URL(fileURLWithPath: "/tmp/archive.zip"),
-                displayName: "archive.zip",
-                directoryName: "Downloads",
-                byteCount: 1_024_000,
-                estimatedTotalByteCount: 2_497_561,
-                progress: 0.41,
-                startedAt: .now.addingTimeInterval(-3),
-                lastUpdatedAt: .now,
-                isTemporaryFile: false,
-                bytesPerSecond: 1_536_000
-            )
-        ])
-
-        await assertEventually {
-            await MainActor.run { context.notchViewModel.notchModel.liveActivityContent?.id == NotchContentRegistry.Media.download.id }
-        }
-
-        context.downloadMonitor.publish([])
-
-        await assertEventually {
-            await MainActor.run { context.notchViewModel.notchModel.content == nil }
-        }
-    }
-
     func testDragAndDropTrayModeShowsTrayLiveActivity() async {
         let context = makeContext(dragAndDropActivityMode: .tray)
 
@@ -770,8 +741,6 @@ private extension NotchEventCoordinatorIntegrationTests {
     struct TestContext {
         let notchViewModel: NotchViewModel
         let coordinator: NotchEventCoordinator
-        let downloadViewModel: DownloadViewModel
-        let downloadMonitor: FakeFileDownloadMonitor
         let airDropViewModel: AirDropNotchViewModel
         let fileTrayViewModel: FileTrayViewModel
         let wifiViewModel: WifiViewModel
@@ -814,7 +783,6 @@ private extension NotchEventCoordinatorIntegrationTests {
         UserDefaults.standard.set(true, forKey: "settings.live.nowPlaying")
         UserDefaults.standard.set(nowPlayingPauseHideTimerEnabled, forKey: "settings.nowPlaying.pauseHideTimerEnabled")
         UserDefaults.standard.set(nowPlayingPauseHideDelay, forKey: "settings.nowPlaying.pauseHideDelay")
-        UserDefaults.standard.set(true, forKey: "settings.live.downloads")
         UserDefaults.standard.set(dragAndDropEnabled, forKey: "settings.live.dragAndDrop")
         UserDefaults.standard.set(dragAndDropActivityMode.rawValue, forKey: "settings.live.dragAndDrop.mode")
         UserDefaults.standard.set(trayLiveActivityEnabled, forKey: "settings.live.tray")
@@ -838,8 +806,6 @@ private extension NotchEventCoordinatorIntegrationTests {
         )
         let wifiViewModel = WifiViewModel(monitor: FakeWifiMonitor(), settings: settingsViewModel.connectivity)
         let vpnViewModel = VpnViewModel(monitor: FakeWifiMonitor(), settings: settingsViewModel.connectivity)
-        let downloadMonitor = FakeFileDownloadMonitor()
-        let downloadViewModel = DownloadViewModel(monitor: downloadMonitor)
         let nowPlayingService = FakeNowPlayingService()
         let lockScreenService = FakeLockScreenMonitoringService()
         let nowPlayingViewModel = NowPlayingViewModel(service: nowPlayingService)
@@ -851,10 +817,8 @@ private extension NotchEventCoordinatorIntegrationTests {
             unlockCollapseDelay: 0.05,
             idleResetDelay: 0.05
         )
-        TestLifetime.retain(downloadViewModel)
         TestLifetime.retain(nowPlayingViewModel)
         TestLifetime.retain(lockScreenManager)
-        downloadViewModel.startMonitoring()
         nowPlayingViewModel.startMonitoring()
         lockScreenManager.startMonitoring()
         let screenRecordingViewModel = ScreenRecordingViewModel(monitor: FakeScreenRecordingMonitor())
@@ -866,7 +830,6 @@ private extension NotchEventCoordinatorIntegrationTests {
             powerService: PowerService(startMonitoring: false),
             wifiViewModel: wifiViewModel,
             vpnViewModel: vpnViewModel,
-            downloadViewModel: downloadViewModel,
             airDropViewModel: airDropViewModel,
             fileTrayViewModel: fileTrayViewModel,
             settingsViewModel: settingsViewModel,
@@ -884,8 +847,6 @@ private extension NotchEventCoordinatorIntegrationTests {
         return TestContext(
             notchViewModel: notchViewModel,
             coordinator: coordinator,
-            downloadViewModel: downloadViewModel,
-            downloadMonitor: downloadMonitor,
             airDropViewModel: airDropViewModel,
             fileTrayViewModel: fileTrayViewModel,
             wifiViewModel: wifiViewModel,

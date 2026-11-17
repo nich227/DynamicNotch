@@ -64,10 +64,6 @@ enum NotchContentRegistry {
             id: "nowPlaying",
             priorityKey: .nowPlaying
         )
-        static let download = NotchContentDescriptor(
-            id: "download.active",
-            priorityKey: .download
-        )
         static let timer = NotchContentDescriptor(
             id: "clock.timer",
             priorityKey: .timer
@@ -203,7 +199,6 @@ enum NotchContentRegistry {
         static let screenRecordingInactive = id(ScreenRecording.inactive.id)
         static let hotspot = id(Wifi.hotspot.id)
         static let nowPlaying = id(Media.nowPlaying.id)
-        static let download = id(Media.download.id)
         static let timer = id(Media.timer.id)
         static let airDrop = id(DragAndDrop.airDrop.id)
         static let tray = id(DragAndDrop.tray.id)

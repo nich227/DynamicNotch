@@ -8,7 +8,6 @@ private struct SettingsRootDebugDependencies {
     let powerService: PowerService
     let wifiViewModel: WifiViewModel
     let vpnViewModel: VpnViewModel
-    let downloadViewModel: DownloadViewModel
     let nowPlayingViewModel: NowPlayingViewModel
     let lockScreenManager: LockScreenManager
     let timerViewModel: TimerViewModel
@@ -23,7 +22,6 @@ extension SettingsRootViewModel {
         powerService: PowerService?,
         wifiViewModel: WifiViewModel?,
         vpnViewModel: VpnViewModel?,
-        downloadViewModel: DownloadViewModel?,
         nowPlayingViewModel: NowPlayingViewModel?,
         timerViewModel: TimerViewModel?,
         lockScreenManager: LockScreenManager?,
@@ -38,7 +36,6 @@ extension SettingsRootViewModel {
             powerService: powerService,
             wifiViewModel: wifiViewModel,
             vpnViewModel: vpnViewModel,
-            downloadViewModel: downloadViewModel,
             nowPlayingViewModel: nowPlayingViewModel,
             timerViewModel: timerViewModel,
             lockScreenManager: lockScreenManager,
@@ -53,7 +50,6 @@ extension SettingsRootViewModel {
             powerService: dependencies.powerService,
             wifiViewModel: dependencies.wifiViewModel,
             vpnViewModel: dependencies.vpnViewModel,
-            downloadViewModel: dependencies.downloadViewModel,
             timerViewModel: dependencies.timerViewModel,
             settingsViewModel: settingsViewModel,
             nowPlayingViewModel: dependencies.nowPlayingViewModel,
@@ -69,7 +65,6 @@ extension SettingsRootViewModel {
         powerService: PowerService?,
         wifiViewModel: WifiViewModel?,
         vpnViewModel: VpnViewModel?,
-        downloadViewModel: DownloadViewModel?,
         nowPlayingViewModel: NowPlayingViewModel?,
         timerViewModel: TimerViewModel?,
         lockScreenManager: LockScreenManager?,
@@ -86,9 +81,6 @@ extension SettingsRootViewModel {
         )
         let resolvedVpnViewModel = vpnViewModel ?? VpnViewModel(
             settings: settingsViewModel.connectivity
-        )
-        let resolvedDownloadViewModel = downloadViewModel ?? DownloadViewModel(
-            monitor: InactiveDownloadMonitor()
         )
         let resolvedAirDropViewModel = AirDropNotchViewModel()
         let resolvedFileTrayViewModel = FileTrayViewModel()
@@ -114,7 +106,6 @@ extension SettingsRootViewModel {
             powerService: resolvedPowerService,
             wifiViewModel: resolvedWifiViewModel,
             vpnViewModel: resolvedVpnViewModel,
-            downloadViewModel: resolvedDownloadViewModel,
             airDropViewModel: resolvedAirDropViewModel,
             fileTrayViewModel: resolvedFileTrayViewModel,
             settingsViewModel: settingsViewModel,
@@ -134,7 +125,6 @@ extension SettingsRootViewModel {
             powerService: resolvedPowerService,
             wifiViewModel: resolvedWifiViewModel,
             vpnViewModel: resolvedVpnViewModel,
-            downloadViewModel: resolvedDownloadViewModel,
             nowPlayingViewModel: resolvedNowPlayingViewModel,
             lockScreenManager: resolvedLockScreenManager,
             timerViewModel: resolvedTimerViewModel

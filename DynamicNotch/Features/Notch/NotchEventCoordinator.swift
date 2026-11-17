@@ -20,7 +20,6 @@ final class NotchEventCoordinator: ObservableObject {
     private let connectivityHandler: NotchConnectivityEventsHandler
     private let powerHandler: NotchPowerEventsHandler
     private let mediaHandler: NotchMediaEventsHandler
-    private let downloadHandler: NotchDownloadEventsHandler
     private let dragAndDropHandler: NotchDragAndDropEventsHandler
     private let timerHandler: NotchTimerEventsHandler
     private let localTimerHandler: NotchLocalTimerEventsHandler
@@ -47,7 +46,6 @@ final class NotchEventCoordinator: ObservableObject {
             powerService: container.powerService,
             wifiViewModel: container.wifiViewModel,
             vpnViewModel: container.vpnViewModel,
-            downloadViewModel: container.downloadViewModel,
             airDropViewModel: container.airDropViewModel,
             fileTrayViewModel: container.fileTrayViewModel,
             settingsViewModel: container.settingsViewModel,
@@ -71,7 +69,6 @@ final class NotchEventCoordinator: ObservableObject {
         powerService: PowerService,
         wifiViewModel: WifiViewModel,
         vpnViewModel: VpnViewModel,
-        downloadViewModel: DownloadViewModel,
         airDropViewModel: AirDropNotchViewModel,
         fileTrayViewModel: FileTrayViewModel,
         settingsViewModel: SettingsViewModel,
@@ -120,11 +117,6 @@ final class NotchEventCoordinator: ObservableObject {
             notchViewModel: notchViewModel,
             settingsViewModel: settingsViewModel,
             nowPlayingViewModel: nowPlayingViewModel
-        )
-        self.downloadHandler = NotchDownloadEventsHandler(
-            notchViewModel: notchViewModel,
-            downloadViewModel: downloadViewModel,
-            settingsViewModel: settingsViewModel
         )
         self.dragAndDropHandler = NotchDragAndDropEventsHandler(
             notchViewModel: notchViewModel,
@@ -190,7 +182,6 @@ final class NotchEventCoordinator: ObservableObject {
             bluetoothViewModel: bluetoothViewModel,
             wifiViewModel: wifiViewModel,
             vpnViewModel: vpnViewModel,
-            downloadViewModel: downloadViewModel,
             airDropViewModel: airDropViewModel,
             nowPlayingViewModel: nowPlayingViewModel,
             timerViewModel: timerViewModel,
@@ -204,14 +195,12 @@ final class NotchEventCoordinator: ObservableObject {
             wifiViewModel: wifiViewModel,
             vpnViewModel: vpnViewModel,
             nowPlayingViewModel: nowPlayingViewModel,
-            downloadViewModel: downloadViewModel,
             timerViewModel: timerViewModel,
             localTimerViewModel: localTimerViewModel,
             screenRecordingViewModel: screenRecordingViewModel,
             lockScreenManager: lockScreenManager,
             connectivityHandler: connectivityHandler,
             mediaHandler: mediaHandler,
-            downloadHandler: downloadHandler,
             dragAndDropHandler: dragAndDropHandler,
             timerHandler: timerHandler,
             localTimerHandler: localTimerHandler,
@@ -309,11 +298,6 @@ final class NotchEventCoordinator: ObservableObject {
         powerHandler.handle(event)
     }
 
-    func handleDownloadEvent(_ event: DownloadEvent) {
-        guard !isOnboardingActive else { return }
-        downloadHandler.handleDownload(event)
-    }
-
     func handleAirDropEvent(_ event: AirDropEvent) {
         dragAndDropHandler.handleAirDrop(event)
     }
@@ -347,7 +331,6 @@ final class NotchEventCoordinator: ObservableObject {
         bluetoothViewModel: BluetoothViewModel,
         wifiViewModel: WifiViewModel,
         vpnViewModel: VpnViewModel,
-        downloadViewModel: DownloadViewModel,
         airDropViewModel: AirDropNotchViewModel,
         nowPlayingViewModel: NowPlayingViewModel,
         timerViewModel: TimerViewModel,
@@ -382,12 +365,6 @@ final class NotchEventCoordinator: ObservableObject {
             .removeDuplicates()
             .sink { [weak self] isOpen in
                 self?.settingsViewModel.isVpnSettingsTabActive = isOpen
-            }
-            .store(in: &cancellables)
-
-        downloadViewModel.$event.compactMap { $0 }
-            .sink { [weak self] event in
-                self?.handleDownloadEvent(event)
             }
             .store(in: &cancellables)
 

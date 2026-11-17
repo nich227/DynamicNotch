@@ -13,14 +13,12 @@ final class NotchSettingsObserver {
     private let wifiViewModel: WifiViewModel
     private let vpnViewModel: VpnViewModel
     private let nowPlayingViewModel: NowPlayingViewModel
-    private let downloadViewModel: DownloadViewModel
     private let timerViewModel: TimerViewModel
     private let localTimerViewModel: LocalTimerViewModel
     private let screenRecordingViewModel: ScreenRecordingViewModel
     private let lockScreenManager: LockScreenManager
     private let connectivityHandler: NotchConnectivityEventsHandler
     private let mediaHandler: NotchMediaEventsHandler
-    private let downloadHandler: NotchDownloadEventsHandler
     private let dragAndDropHandler: NotchDragAndDropEventsHandler
     private let timerHandler: NotchTimerEventsHandler
     private let localTimerHandler: NotchLocalTimerEventsHandler
@@ -35,14 +33,12 @@ final class NotchSettingsObserver {
         wifiViewModel: WifiViewModel,
         vpnViewModel: VpnViewModel,
         nowPlayingViewModel: NowPlayingViewModel,
-        downloadViewModel: DownloadViewModel,
         timerViewModel: TimerViewModel,
         localTimerViewModel: LocalTimerViewModel,
         screenRecordingViewModel: ScreenRecordingViewModel,
         lockScreenManager: LockScreenManager,
         connectivityHandler: NotchConnectivityEventsHandler,
         mediaHandler: NotchMediaEventsHandler,
-        downloadHandler: NotchDownloadEventsHandler,
         dragAndDropHandler: NotchDragAndDropEventsHandler,
         timerHandler: NotchTimerEventsHandler,
         localTimerHandler: NotchLocalTimerEventsHandler,
@@ -55,14 +51,12 @@ final class NotchSettingsObserver {
         self.wifiViewModel = wifiViewModel
         self.vpnViewModel = vpnViewModel
         self.nowPlayingViewModel = nowPlayingViewModel
-        self.downloadViewModel = downloadViewModel
         self.timerViewModel = timerViewModel
         self.localTimerViewModel = localTimerViewModel
         self.screenRecordingViewModel = screenRecordingViewModel
         self.lockScreenManager = lockScreenManager
         self.connectivityHandler = connectivityHandler
         self.mediaHandler = mediaHandler
-        self.downloadHandler = downloadHandler
         self.dragAndDropHandler = dragAndDropHandler
         self.timerHandler = timerHandler
         self.localTimerHandler = localTimerHandler
@@ -220,21 +214,6 @@ final class NotchSettingsObserver {
             self.mediaHandler.syncNowPlayingPlaybackState()
         }
         .store(in: &cancellables)
-
-        settingsViewModel.mediaAndFiles.$isDownloadsLiveActivityEnabled
-            .removeDuplicates()
-            .sink { [weak self] isEnabled in
-                guard let self else { return }
-
-                if isEnabled {
-                    if self.downloadViewModel.hasActiveDownloads {
-                        self.downloadHandler.handleDownload(.started)
-                    }
-                } else {
-                    self.notchViewModel.send(.hideLiveActivity(id: NotchContentRegistry.Media.download.id))
-                }
-            }
-            .store(in: &cancellables)
 
         settingsViewModel.mediaAndFiles.$isDragAndDropLiveActivityEnabled
             .removeDuplicates()

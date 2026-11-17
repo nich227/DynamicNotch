@@ -191,17 +191,6 @@ struct DebugSettingsView: View {
             isOn: $viewModel.isTimerPreviewEnabled,
             accessibilityIdentifier: "settings.debug.timer"
         )
-
-        debugDivider
-
-        SettingsToggleRow(
-            title: "Downloads",
-            description: "Show the download live activity with sample transfer data.",
-            systemImage: "arrow.down.doc.fill",
-            color: .blue,
-            isOn: $viewModel.isDownloadPreviewEnabled,
-            accessibilityIdentifier: "settings.debug.downloads"
-        )
     }
 
     @ViewBuilder
@@ -506,16 +495,6 @@ struct DebugSettingsView: View {
             systemImage: "stop.circle.fill",
             color: .orange,
             action: viewModel.triggerNowPlayingStoppedPreview
-        )
-
-        debugDivider
-
-        DebugActionRow(
-            title: "Download Stopped",
-            description: "Hide the downloads live activity with the stopped event.",
-            systemImage: "arrow.down.circle.fill",
-            color: .blue,
-            action: viewModel.triggerDownloadStoppedPreview
         )
 
         debugDivider

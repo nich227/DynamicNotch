@@ -15,7 +15,6 @@ final class AppContainer {
     let screenshotViewModel = ScreenshotViewModel()
 
     let powerViewModel: PowerViewModel
-    let downloadViewModel: DownloadViewModel
     let nowPlayingViewModel: NowPlayingViewModel
     let timerViewModel: TimerViewModel
     let screenRecordingViewModel: ScreenRecordingViewModel
@@ -93,11 +92,6 @@ final class AppContainer {
                 InactiveLyricsProvider() :
                 LRCLIBLyricsProvider(),
             sourceFilter: settingsViewModel.mediaAndFiles.nowPlayingSourceFilter
-        )
-        self.downloadViewModel = DownloadViewModel(
-            monitor: isRunningTests ?
-                InactiveDownloadMonitor() :
-                FolderFileDownloadMonitor()
         )
         self.clockTimerController = isRunningTests ?
             InactiveClockTimerController() :

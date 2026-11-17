@@ -5,7 +5,6 @@ enum NotchContentPriority {
     enum Key: String, CaseIterable, Identifiable {
         case focus
         case hotspot
-        case download
         case trayActive
         case airDropTransferActive
         case nowPlaying
@@ -22,8 +21,6 @@ enum NotchContentPriority {
                 NotchContentPriority.focus
             case .hotspot:
                 NotchContentPriority.hotspot
-            case .download:
-                NotchContentPriority.download
             case .trayActive:
                 NotchContentPriority.trayActive
             case .airDropTransferActive:
@@ -47,8 +44,6 @@ enum NotchContentPriority {
                 "settings.notch.priorities.row.focus"
             case .hotspot:
                 "settings.notch.priorities.row.hotspot"
-            case .download:
-                "settings.notch.priorities.row.downloads"
             case .trayActive:
                 "settings.notch.priorities.row.trayActive"
             case .airDropTransferActive:
@@ -72,8 +67,6 @@ enum NotchContentPriority {
                 return "moon.fill"
             case .hotspot:
                 return "personalhotspot"
-            case .download:
-                return "arrow.down.circle.fill"
             case .trayActive:
                 return "tray.full.fill"
             case .airDropTransferActive:
@@ -97,8 +90,6 @@ enum NotchContentPriority {
                     .indigo
             case .hotspot:
                     .green
-            case .download:
-                    .blue
             case .trayActive:
                     .black
             case .airDropTransferActive:
@@ -124,7 +115,6 @@ enum NotchContentPriority {
         .hotspot,
         .vpn,
         .timer,
-        .download,
         .trayActive,
         .airDropTransferActive,
         .nowPlaying,
@@ -137,7 +127,6 @@ enum NotchContentPriority {
     static let hotspot = 2
     static let vpn = 3
     static let timer = 4
-    static let download = 5
     static let trayActive = 6
     static let airDropTransferActive = 7
     static let nowPlaying = 8

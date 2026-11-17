@@ -58,8 +58,6 @@ enum GeneralSettingsStorage {
         static let nowPlayingPauseHideTimerEnabled = "settings.nowPlaying.pauseHideTimerEnabled"
         static let nowPlayingPauseHideDelay = "settings.nowPlaying.pauseHideDelay"
         static let nowPlayingSourceFilter = "settings.nowPlaying.sourceFilter"
-        static let downloadsLiveActivityEnabled = "settings.live.downloads"
-        static let downloadsProgressIndicatorStyle = "settings.live.downloads.progressIndicatorStyle"
         static let dragAndDropLiveActivityEnabled = "settings.live.dragAndDrop"
         static let airDropLiveActivityEnabled = "settings.live.airDrop"
         static let dragAndDropActivityMode = "settings.live.dragAndDrop.mode"
@@ -77,7 +75,6 @@ enum GeneralSettingsStorage {
         static let screenshotAutoHideEnabled = "settings.screenshot.autoHideEnabled"
         static let screenshotSavePath = "settings.screenshot.savePath"
         static let screenRecordingSavePath = "settings.screenRecording.savePath"
-        static let legacyFileTransfersLiveActivityEnabled = "settings.live.fileTransfers"
         static let chargerTemporaryActivityEnabled = "settings.temporary.charger"
         static let lowPowerTemporaryActivityEnabled = "settings.temporary.lowPower"
         static let fullPowerTemporaryActivityEnabled = "settings.temporary.fullPower"
@@ -185,8 +182,6 @@ enum GeneralSettingsStorage {
         Keys.nowPlayingPauseHideTimerEnabled: true,
         Keys.nowPlayingPauseHideDelay: 5,
         Keys.nowPlayingSourceFilter: NowPlayingSourceFilter.any.rawValue,
-        Keys.downloadsLiveActivityEnabled: true,
-        Keys.downloadsProgressIndicatorStyle: DownloadProgressIndicatorStyle.percent.rawValue,
         Keys.dragAndDropLiveActivityEnabled: true,
         Keys.airDropLiveActivityEnabled: true,
         Keys.dragAndDropActivityMode: DragAndDropActivityMode.combined.rawValue,

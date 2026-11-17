@@ -842,35 +842,6 @@ final class NotchViewModelIntegrationTests: XCTestCase {
     }
 
     @MainActor
-    func testTappingDownloadLiveActivityUsesExpandedPresentation() async {
-        let viewModel = NotchViewModel(
-            settings: TestNotchSettings(),
-            hideDelay: 0.01,
-            queueDelay: 0
-        )
-        let settingsViewModel = SettingsViewModel()
-        let downloadViewModel = DownloadViewModel(monitor: FakeFileDownloadMonitor())
-        TestLifetime.retain(viewModel)
-        TestLifetime.retain(downloadViewModel)
-
-        viewModel.send(.showLiveActivity(DownloadNotchContent(downloadViewModel: downloadViewModel, settingsViewModel: settingsViewModel)))
-
-        await assertEventually {
-            await MainActor.run { viewModel.notchModel.liveActivityContent?.id == NotchContentRegistry.Media.download.id }
-        }
-
-        let collapsedSize = await MainActor.run { viewModel.notchModel.size }
-
-        viewModel.handleActiveContentTap()
-        await assertEventually {
-            await MainActor.run { viewModel.notchModel.isLiveActivityExpanded }
-        }
-        let expandedSize = await MainActor.run { viewModel.notchModel.size }
-
-        XCTAssertGreaterThan(expandedSize.height, collapsedSize.height)
-    }
-
-    @MainActor
     func testOutsideClickHidesExpandedLiveActivityThenRestoresCollapsedPresentation() async {
         let viewModel = NotchViewModel(
             settings: TestNotchSettings(),

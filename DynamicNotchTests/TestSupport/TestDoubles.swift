@@ -198,25 +198,6 @@ final class FakeAudioOutputRoutingService: AudioOutputRouting {
     }
 }
 
-final class FakeFileDownloadMonitor: DownloadMonitoring, @unchecked Sendable {
-    var onSnapshotChange: (@Sendable ([DownloadModel]) -> Void)?
-
-    private(set) var startCalls = 0
-    private(set) var stopCalls = 0
-
-    func startMonitoring() {
-        startCalls += 1
-    }
-
-    func stopMonitoring() {
-        stopCalls += 1
-    }
-
-    func publish(_ transfers: [DownloadModel]) {
-        onSnapshotChange?(transfers)
-    }
-}
-
 @MainActor
 final class FakeScreenRecordingMonitor: ScreenRecordingMonitoring {
     var onRecordingStateChange: ((Bool) -> Void)?

@@ -13,7 +13,7 @@ import SwiftUI
 /// **Apple LiveActivity & Dynamic Island architecture:**
 /// This model mirrors Apple's presentation system for Dynamic Island and Live Activities (ActivityKit / WidgetKit):
 /// - **Ongoing Live Activities** (`liveActivityContent` / `activityContent`):
-///   Long-running persistent activities (e.g. Media Playback, Active Timer, Downloads, Battery status).
+///   Long-running persistent activities (e.g. Media Playback, Active Timer, Battery status).
 /// - **Transient Alerts / Notifications** (`alertContent` / `temporaryNotificationContent`):
 ///   Short-lived banner/HUD alerts (e.g. Volume/Brightness changes, AirPods connect, Lock screen status)
 ///   that temporarily preempt ongoing Live Activities.

@@ -187,4 +187,20 @@ final class StoredDefaultTests: XCTestCase {
         XCTAssertTrue(store.isFocusOnAutoHideEnabled)
         XCTAssertEqual(store.focusOnTemporaryActivityDuration, 3)
     }
+
+    func testStoredPriorityOverrideForUnknownActivityIsIgnored() {
+        testDefaults.set(
+            ["download": 9, NotchContentPriority.Key.timer.rawValue: 12],
+            forKey: GeneralSettingsStorage.Keys.notchContentPriorityOverrides
+        )
+
+        let store = ApplicationSettingsStore(defaults: testDefaults)
+
+        XCTAssertEqual(store.notchContentPriorityOverrides, [NotchContentPriority.Key.timer.rawValue: 12])
+        XCTAssertEqual(NotchContentPriority.resolvedValue(for: .timer, defaults: testDefaults), 12)
+    }
+
+    func testStoredSelectionOfUnknownSettingsSectionFallsBackToGeneral() {
+        XCTAssertEqual(SettingsRootViewModel.Section.initialSelection(storedValue: "downloads"), .general)
+    }
 }

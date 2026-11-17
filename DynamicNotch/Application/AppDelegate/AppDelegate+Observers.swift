@@ -30,19 +30,6 @@ extension AppDelegate {
         }
         .store(in: &cancellables)
 
-        settingsViewModel.mediaAndFiles.$isDownloadsLiveActivityEnabled
-            .removeDuplicates()
-            .sink { [weak self] isDownloadsLiveActivityEnabled in
-                guard let self else { return }
-
-                if isDownloadsLiveActivityEnabled {
-                    downloadViewModel.startMonitoring()
-                } else {
-                    downloadViewModel.stopMonitoring()
-                }
-            }
-            .store(in: &cancellables)
-
         settingsViewModel.mediaAndFiles.$isTimerLiveActivityEnabled
             .removeDuplicates()
             .sink { [weak self] isTimerLiveActivityEnabled in

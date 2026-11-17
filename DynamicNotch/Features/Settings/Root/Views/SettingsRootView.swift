@@ -22,7 +22,6 @@ struct SettingsRootView: View {
     let bluetoothViewModel: BluetoothViewModel
     let wifiViewModel: WifiViewModel
     let vpnViewModel: VpnViewModel
-    let downloadViewModel: DownloadViewModel
     let nowPlayingViewModel: NowPlayingViewModel
     let timerViewModel: TimerViewModel
     let lockScreenManager: LockScreenManager
@@ -62,7 +61,6 @@ struct SettingsRootView: View {
             bluetoothViewModel: container.bluetoothViewModel,
             wifiViewModel: container.wifiViewModel,
             vpnViewModel: container.vpnViewModel,
-            downloadViewModel: container.downloadViewModel,
             nowPlayingViewModel: container.nowPlayingViewModel,
             timerViewModel: container.timerViewModel,
             lockScreenManager: container.lockScreenManager
@@ -77,7 +75,6 @@ struct SettingsRootView: View {
         bluetoothViewModel: BluetoothViewModel,
         wifiViewModel: WifiViewModel,
         vpnViewModel: VpnViewModel,
-        downloadViewModel: DownloadViewModel,
         nowPlayingViewModel: NowPlayingViewModel,
         timerViewModel: TimerViewModel,
         lockScreenManager: LockScreenManager
@@ -89,7 +86,6 @@ struct SettingsRootView: View {
         self.bluetoothViewModel = bluetoothViewModel
         self.wifiViewModel = wifiViewModel
         self.vpnViewModel = vpnViewModel
-        self.downloadViewModel = downloadViewModel
         self.nowPlayingViewModel = nowPlayingViewModel
         self.timerViewModel = timerViewModel
         self.lockScreenManager = lockScreenManager
@@ -101,7 +97,6 @@ struct SettingsRootView: View {
             powerService: powerService,
             wifiViewModel: wifiViewModel,
             vpnViewModel: vpnViewModel,
-            downloadViewModel: downloadViewModel,
             nowPlayingViewModel: nowPlayingViewModel,
             timerViewModel: timerViewModel,
             lockScreenManager: lockScreenManager
@@ -400,14 +395,6 @@ struct SettingsRootView: View {
                 )
             }
             
-        case .downloads:
-            detailContainer(for: section) {
-                DownloadsSettingsView(
-                    mediaSettings: settingsViewModel.mediaAndFiles,
-                    appearanceSettings: settingsViewModel.application
-                )
-            }
-
         case .drop:
             detailContainer(for: section) {
                 DragAndDropSettingsView(

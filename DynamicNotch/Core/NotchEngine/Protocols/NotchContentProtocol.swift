@@ -27,7 +27,7 @@ protocol NotchContentProtocol: DynamicIslandCustomizable {
     /// Unique identifier for this activity instance (Apple: `Activity<Attributes>.id`).
     var id: String { get }
 
-    /// Grouping identifier used for replacing or grouping activities in the same stack (e.g. downloads, timers).
+    /// Grouping identifier used for replacing or grouping activities in the same stack (e.g. timers).
     var stackID: String { get }
 
     /// Presentation priority score.

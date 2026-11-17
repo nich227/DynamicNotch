@@ -24,7 +24,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     var airDropController: NotchAirDropController { container.airDropController }
     var lockScreenManager: LockScreenManager { container.lockScreenManager }
     var nowPlayingViewModel: NowPlayingViewModel { container.nowPlayingViewModel }
-    var downloadViewModel: DownloadViewModel { container.downloadViewModel }
     var timerViewModel: TimerViewModel { container.timerViewModel }
     var screenRecordingViewModel: ScreenRecordingViewModel { container.screenRecordingViewModel }
     var externalDrivesMonitor: ExternalDrivesMonitor { container.externalDrivesMonitor }
@@ -113,7 +112,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSWorkspace.shared.notificationCenter.removeObserver(self)
         container.lockScreenManager.stopMonitoring()
         container.nowPlayingViewModel.stopMonitoring()
-        container.downloadViewModel.stopMonitoring()
         container.timerViewModel.stopMonitoring()
         container.screenRecordingViewModel.stopMonitoring()
         container.hardwareHUDMonitor.stopMonitoring()

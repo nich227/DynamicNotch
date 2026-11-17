@@ -361,28 +361,6 @@
         }
       }
     },
-    "Download Stopped": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Download Stopped"
-          }
-        }
-      }
-    },
-    "Downloads": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Downloads"
-          }
-        }
-      }
-    },
     "Drag Ended": {
       "extractionState": "manual",
       "localizations": {
@@ -852,17 +830,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hide Current Temporary"
-          }
-        }
-      }
-    },
-    "Hide the downloads live activity with the stopped event.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hide the downloads live activity with the stopped event."
           }
         }
       }
@@ -2259,7 +2226,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Turn your MacBook notch into a live interactive surface. Control media, track downloads, manage timers, and monitor system events with fluid animations."
+            "value": "Turn your MacBook notch into a live interactive surface. Control media, manage timers, and monitor system events with fluid animations."
           }
         }
       }
@@ -3239,94 +3206,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Utilities"
-          }
-        }
-      }
-    },
-    "settings.downloads.card.activity": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Download activity"
-          }
-        }
-      }
-    },
-    "settings.downloads.card.appearance": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Download appearance"
-          }
-        }
-      }
-    },
-    "settings.downloads.liveActivity.desc": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Show a live activity while files download to monitored folders such as Downloads, Desktop, and Documents."
-          }
-        }
-      }
-    },
-    "settings.downloads.liveActivity.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Downloads live activity"
-          }
-        }
-      }
-    },
-    "settings.downloads.progressIndicator.desc": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Choose whether download progress uses a percentage label or a circular ring."
-          }
-        }
-      }
-    },
-    "settings.downloads.progressIndicator.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Progress indicator"
-          }
-        }
-      }
-    },
-    "settings.downloads.progressIndicatorStyle.circle": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Circle"
-          }
-        }
-      }
-    },
-    "settings.downloads.progressIndicatorStyle.percent": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Percent"
           }
         }
       }
@@ -6939,17 +6818,6 @@
         }
       }
     },
-    "settings.notch.priorities.row.downloads": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Downloads"
-          }
-        }
-      }
-    },
     "settings.notch.priorities.row.focus": {
       "extractionState": "manual",
       "localizations": {
@@ -8270,28 +8138,6 @@
         }
       }
     },
-    "settings.section.downloads.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Live download tracking and transfer previews."
-          }
-        }
-      }
-    },
-    "settings.section.downloads.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Downloads"
-          }
-        }
-      }
-    },
     "settings.section.drop.subtitle": {
       "extractionState": "manual",
       "localizations": {
@@ -9487,17 +9333,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Show the converter live activity with a sample image."
-          }
-        }
-      }
-    },
-    "Show the download live activity with sample transfer data.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Show the download live activity with sample transfer data."
           }
         }
       }

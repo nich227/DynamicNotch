@@ -16,7 +16,6 @@ final class DebugSettingsViewModel: ObservableObject {
     @Published var isScreenRecordingPreviewEnabled = false
     @Published var isHotspotPreviewEnabled = false
     @Published var isNowPlayingPreviewEnabled = false
-    @Published var isDownloadPreviewEnabled = false
     @Published var isTimerPreviewEnabled = false
     @Published var isFileTrayPreviewEnabled = false
     @Published var isLockScreenPreviewEnabled = false
@@ -29,7 +28,6 @@ final class DebugSettingsViewModel: ObservableObject {
     private static let sequenceScreenRecordingID = NotchContentRegistry.DebugSequence.screenRecording
     private static let sequenceHotspotID = NotchContentRegistry.DebugSequence.hotspot
     private static let sequenceNowPlayingID = NotchContentRegistry.DebugSequence.nowPlaying
-    private static let sequenceDownloadsID = NotchContentRegistry.DebugSequence.download
     private static let sequenceTimerID = NotchContentRegistry.DebugSequence.timer
     private static let sequenceAirDropID = NotchContentRegistry.DebugSequence.airDrop
     private static let sequenceTrayID = NotchContentRegistry.DebugSequence.tray
@@ -46,7 +44,6 @@ final class DebugSettingsViewModel: ObservableObject {
         sequenceScreenRecordingID,
         sequenceHotspotID,
         sequenceNowPlayingID,
-        sequenceDownloadsID,
         sequenceTimerID,
         sequenceAirDropID,
         sequenceTrayID,
@@ -62,7 +59,6 @@ final class DebugSettingsViewModel: ObservableObject {
     private let powerService: PowerService
     private let wifiViewModel: WifiViewModel
     private let vpnViewModel: VpnViewModel
-    private let downloadViewModel: DownloadViewModel
     private let timerViewModel: TimerViewModel
     private let nowPlayingViewModel: NowPlayingViewModel
     private let lockScreenManager: LockScreenManager
@@ -80,7 +76,6 @@ final class DebugSettingsViewModel: ObservableObject {
         powerService: PowerService,
         wifiViewModel: WifiViewModel,
         vpnViewModel: VpnViewModel,
-        downloadViewModel: DownloadViewModel,
         timerViewModel: TimerViewModel,
         settingsViewModel: SettingsViewModel,
         nowPlayingViewModel: NowPlayingViewModel,
@@ -92,7 +87,6 @@ final class DebugSettingsViewModel: ObservableObject {
         self.powerService = powerService
         self.wifiViewModel = wifiViewModel
         self.vpnViewModel = vpnViewModel
-        self.downloadViewModel = downloadViewModel
         self.timerViewModel = timerViewModel
         self.settingsViewModel = settingsViewModel
         self.nowPlayingViewModel = nowPlayingViewModel
@@ -192,12 +186,6 @@ final class DebugSettingsViewModel: ObservableObject {
         notchEventCoordinator.handleNowPlayingEvent(.stopped)
         nowPlayingViewModel.hideDebugPreviewSnapshotIfNeeded()
         isNowPlayingPreviewEnabled = false
-    }
-
-    func triggerDownloadStoppedPreview() {
-        downloadViewModel.hideDebugPreviewDownloadsIfNeeded()
-        notchEventCoordinator.handleDownloadEvent(.stopped)
-        isDownloadPreviewEnabled = false
     }
 
     func triggerTimerUpdatedPreview() {
@@ -311,7 +299,6 @@ final class DebugSettingsViewModel: ObservableObject {
         isScreenRecordingPreviewEnabled = false
         isHotspotPreviewEnabled = false
         isNowPlayingPreviewEnabled = false
-        isDownloadPreviewEnabled = false
         isTimerPreviewEnabled = false
         isFileTrayPreviewEnabled = false
         isLockScreenPreviewEnabled = false
@@ -345,11 +332,6 @@ final class DebugSettingsViewModel: ObservableObject {
         $isNowPlayingPreviewEnabled
             .dropFirst()
             .sink { [weak self] enabled in self?.updateNowPlayingPreview(isEnabled: enabled) }
-            .store(in: &cancellables)
-
-        $isDownloadPreviewEnabled
-            .dropFirst()
-            .sink { [weak self] enabled in self?.updateDownloadPreview(isEnabled: enabled) }
             .store(in: &cancellables)
 
         $isTimerPreviewEnabled
@@ -427,22 +409,6 @@ final class DebugSettingsViewModel: ObservableObject {
         }
     }
 
-    private func updateDownloadPreview(isEnabled: Bool? = nil) {
-        let enabled = isEnabled ?? isDownloadPreviewEnabled
-        if enabled {
-            downloadViewModel.showDebugPreviewDownloadsIfNeeded()
-            notchEventCoordinator.handleDownloadEvent(.started)
-        } else {
-            downloadViewModel.hideDebugPreviewDownloadsIfNeeded()
-
-            if downloadViewModel.hasActiveDownloads {
-                notchEventCoordinator.handleDownloadEvent(.started)
-            } else {
-                notchEventCoordinator.handleDownloadEvent(.stopped)
-            }
-        }
-    }
-    
     private func updateTimerPreview(isEnabled: Bool? = nil) {
         let enabled = isEnabled ?? isTimerPreviewEnabled
         if enabled {
@@ -526,7 +492,6 @@ final class DebugSettingsViewModel: ObservableObject {
                     id: Self.sequenceHotspotID
                 )
                 try await self.playNowPlayingPreview()
-                try await self.playDownloadsPreview()
                 try await self.playTimerPreview()
                 try await self.playDragAndDropTargetPreview(
                     .airDrop,
@@ -773,22 +738,6 @@ final class DebugSettingsViewModel: ObservableObject {
         }
     }
 
-    private func playDownloadsPreview() async throws {
-        downloadViewModel.showDebugPreviewDownloadsIfNeeded()
-        try await playLivePreview(
-            DownloadNotchContent(
-                downloadViewModel: downloadViewModel,
-                settingsViewModel: settingsViewModel
-            ),
-            id: Self.sequenceDownloadsID
-        )
-        downloadViewModel.hideDebugPreviewDownloadsIfNeeded()
-
-        if isDownloadPreviewEnabled {
-            updateDownloadPreview()
-        }
-    }
-
     private func playTimerPreview() async throws {
         timerViewModel.showDebugPreviewSnapshotIfNeeded()
         try await playLivePreview(
@@ -936,16 +885,11 @@ final class DebugSettingsViewModel: ObservableObject {
         dragAndDropPreviewViewModel.setDraggingFile(false)
         fileTrayPreviewViewModel.clear()
         nowPlayingViewModel.hideDebugPreviewSnapshotIfNeeded()
-        downloadViewModel.hideDebugPreviewDownloadsIfNeeded()
         timerViewModel.hideDebugPreviewSnapshotIfNeeded()
         lockScreenManager.setDebugLockState(isLockScreenPreviewEnabled)
 
         if isNowPlayingPreviewEnabled {
             updateNowPlayingPreview()
-        }
-
-        if isDownloadPreviewEnabled {
-            updateDownloadPreview()
         }
 
         if isTimerPreviewEnabled {

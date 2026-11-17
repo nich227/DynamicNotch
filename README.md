@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  DynamicNotch is a native macOS app that turns the notch into a live surface for media, downloads, AirDrop, timers,
+  DynamicNotch is a native macOS app that turns the notch into a live surface for media, AirDrop, timers,
   screen recording, connectivity events, lock screen transitions, and custom hardware HUDs.
   This repository is a fork of <a href="https://github.com/jackson-storm/DynamicNotch">jackson-storm/DynamicNotch</a>.
 </p>
@@ -31,7 +31,7 @@
 
 ## What it does
 
-- Live activities include Now Playing controls, artwork, and an audio visualizer. They also include download progress, AirDrop, timers, a screen recording indicator, Focus, Personal Hotspot, and lock screen media.
+- Live activities include Now Playing controls, artwork, and an audio visualizer. They also include AirDrop, timers, a screen recording indicator, Focus, Personal Hotspot, and lock screen media.
 - Temporary alerts cover battery charging, low battery, and full battery. They also cover Bluetooth connections, Wi-Fi, VPN, and Focus turning off.
 - Gestures let you click, hover, or press and hold to expand. Swipe up to hide an activity and down to restore it.
 - Motion uses spring animations that stretch and settle like the Dynamic Island on iPhone.

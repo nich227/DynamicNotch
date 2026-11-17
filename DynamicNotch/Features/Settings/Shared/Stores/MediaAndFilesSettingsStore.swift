@@ -2,7 +2,6 @@ import Foundation
 import Combine
 
 extension NowPlayingSourceFilter: StoredSettingValue {}
-extension DownloadProgressIndicatorStyle: StoredSettingValue {}
 extension FileTrayUsageMode: StoredSettingValue {}
 extension DragAndDropActivityMode: StoredSettingValue {}
 extension TimerSound: StoredSettingValue {}
@@ -33,12 +32,6 @@ final class MediaAndFilesSettingsStore: SettingsStoreBase {
 
     @StoredDefault(key: GeneralSettingsStorage.Keys.nowPlayingSourceFilter, defaultValue: .any)
     var nowPlayingSourceFilter: NowPlayingSourceFilter
-
-    @StoredDefault(key: GeneralSettingsStorage.Keys.downloadsLiveActivityEnabled, defaultValue: true)
-    var isDownloadsLiveActivityEnabled: Bool
-
-    @StoredDefault(key: GeneralSettingsStorage.Keys.downloadsProgressIndicatorStyle, defaultValue: .percent)
-    var downloadsProgressIndicatorStyle: DownloadProgressIndicatorStyle
 
     @StoredDefault(key: GeneralSettingsStorage.Keys.dragAndDropLiveActivityEnabled, defaultValue: true)
     var isDragAndDropLiveActivityEnabled: Bool
@@ -76,15 +69,6 @@ final class MediaAndFilesSettingsStore: SettingsStoreBase {
     @StoredDefault(key: GeneralSettingsStorage.Keys.localTimerShortcutKeyDisplay, defaultValue: "T")
     var localTimerShortcutKeyDisplay: String
 
-    override init(defaults: UserDefaults) {
-        if defaults.object(forKey: GeneralSettingsStorage.Keys.downloadsLiveActivityEnabled) == nil,
-           let legacyDownloads = defaults.object(forKey: GeneralSettingsStorage.Keys.legacyFileTransfersLiveActivityEnabled) as? Bool {
-            defaults.set(legacyDownloads, forKey: GeneralSettingsStorage.Keys.downloadsLiveActivityEnabled)
-        }
-
-        super.init(defaults: defaults)
-    }
-
     func resetNowPlaying() {
         isNowPlayingLiveActivityEnabled = defaultBool(for: GeneralSettingsStorage.Keys.nowPlayingLiveActivityEnabled)
         isNowPlayingFavoriteButtonVisible = defaultBool(for: GeneralSettingsStorage.Keys.nowPlayingFavoriteButtonVisible)
@@ -93,11 +77,6 @@ final class MediaAndFilesSettingsStore: SettingsStoreBase {
         isNowPlayingPauseHideTimerEnabled = defaultBool(for: GeneralSettingsStorage.Keys.nowPlayingPauseHideTimerEnabled)
         nowPlayingPauseHideDelay = defaultInt(for: GeneralSettingsStorage.Keys.nowPlayingPauseHideDelay)
         nowPlayingSourceFilter = .any
-    }
-
-    func resetDownloads() {
-        isDownloadsLiveActivityEnabled = defaultBool(for: GeneralSettingsStorage.Keys.downloadsLiveActivityEnabled)
-        downloadsProgressIndicatorStyle = .percent
     }
 
     func resetDragAndDrop() {

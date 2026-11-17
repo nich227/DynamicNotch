@@ -83,7 +83,6 @@ extension SettingsRootViewModel {
         case battery
         
         case nowPlaying
-        case downloads
         case drop
         
         case hud
@@ -308,19 +307,6 @@ private enum SettingsSectionCatalog {
                 imageName: nil,
                 tint: .gray,
                 resetGroup: .externalDevices
-            )
-
-        case .downloads:
-            return .init(
-                sidebarGroup: .mediaAndFiles,
-                titleKey: "settings.section.downloads.title",
-                fallbackTitle: "Downloads",
-                subtitleKey: "settings.section.downloads.subtitle",
-                fallbackSubtitle: "Live download tracking and transfer previews.",
-                systemImage: "arrow.down.circle.fill",
-                imageName: nil,
-                tint: .blue,
-                resetGroup: .downloads
             )
 
         case .drop:
