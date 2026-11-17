@@ -75,6 +75,20 @@ enum NotchlessWindowMargin {
     }
 }
 
+enum WindowDragTarget {
+    nonisolated static let controlRoles: Set<String> = [
+        "AXButton", "AXRadioButton", "AXPopUpButton", "AXMenuButton", "AXCheckBox", "AXSlider", "AXLink",
+        "AXTextField", "AXTextArea"
+    ]
+
+    /// A control handles its own press, so pressing the control or any part of it does not move the window.
+    ///
+    /// The list contains the pressed element's role first, then the role of each element that contains it.
+    nonisolated static func canMoveWindow(roles: [String]) -> Bool {
+        !roles.contains(where: controlRoles.contains)
+    }
+}
+
 @MainActor
 final class NotchlessWindowConstrainer {
     private let settings: ApplicationSettingsStore
@@ -415,7 +429,8 @@ final class NotchlessWindowConstrainer {
                     initialMouseDownLoc: loc,
                     restorableSize: nil
                 )
-            } else if relY > 3 && relY <= max(80, min(120, size.height * 0.35)) {
+            } else if relY > 3 && relY <= max(80, min(120, size.height * 0.35)),
+                      WindowDragTarget.canMoveWindow(roles: roles(from: element, role: role)) {
                 activeDragSession = ActiveWindowDragSession(
                     window: windowElement,
                     clickOffsetY: relY,
@@ -543,6 +558,33 @@ final class NotchlessWindowConstrainer {
         }
 
         return Unmanaged.passRetained(event)
+    }
+
+    /// Reads the role of each element that contains `element`, up to but not including the element's window.
+    private func roles(from element: AXUIElement, role: String?) -> [String] {
+        var roles = role.map { [$0] } ?? []
+        var current = element
+
+        for _ in 0..<6 {
+            var parentRef: CFTypeRef?
+            guard AXUIElementCopyAttributeValue(current, kAXParentAttribute as CFString, &parentRef) == .success,
+                  let parent = parentRef,
+                  CFGetTypeID(parent) == AXUIElementGetTypeID() else {
+                break
+            }
+            let parentElement = parent as! AXUIElement
+
+            var parentRoleRef: CFTypeRef?
+            AXUIElementCopyAttributeValue(parentElement, kAXRoleAttribute as CFString, &parentRoleRef)
+            guard let parentRole = parentRoleRef as? String, parentRole != (kAXWindowRole as String) else {
+                break
+            }
+
+            roles.append(parentRole)
+            current = parentElement
+        }
+
+        return roles
     }
 
     // MARK: - App Registration
