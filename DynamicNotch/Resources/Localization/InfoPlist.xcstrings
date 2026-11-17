@@ -294,7 +294,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "We need access to media data for display in Notch."
+            "value": "DynamicNotch needs access to media data to display it in the notch."
           }
         },
         "es": {
@@ -533,7 +533,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The app requires Bluetooth access to check the status of devices."
+            "value": "DynamicNotch needs Bluetooth access to check the status of your devices."
           }
         },
         "es": {
@@ -1728,7 +1728,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The app requires local network access to determine the name of your current Wi-Fi network."
+            "value": "DynamicNotch needs local network access to determine the name of your current Wi-Fi network."
           }
         },
         "es": {

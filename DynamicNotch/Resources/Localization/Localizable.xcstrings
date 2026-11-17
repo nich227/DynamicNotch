@@ -9138,7 +9138,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Empty Location"
+            "value" : "No Location"
           }
         },
         "es" : {
@@ -11767,7 +11767,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Move closer to screen"
+            "value" : "Move closer to the screen"
           }
         },
         "es" : {
@@ -12723,7 +12723,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Position face in frame and look at camera"
+            "value" : "Position your face in the frame and look at the camera"
           }
         },
         "es" : {
@@ -12962,7 +12962,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Position face in frame"
+            "value" : "Position your face in the frame"
           }
         },
         "es" : {
@@ -13201,7 +13201,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Now turn head to the left"
+            "value" : "Now turn your head to the left"
           }
         },
         "es" : {
@@ -13440,7 +13440,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Now turn head slightly to the left"
+            "value" : "Now turn your head slightly to the left"
           }
         },
         "es" : {
@@ -13679,7 +13679,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Turn head slightly to the right"
+            "value" : "Turn your head slightly to the right"
           }
         },
         "es" : {
@@ -13918,7 +13918,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Slowly turn head to the right"
+            "value" : "Slowly turn your head to the right"
           }
         },
         "es" : {
@@ -20610,7 +20610,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "If the original is moved to the tray and deleted from there, you can restore it in the system trash."
+            "value" : "If you move the original to the Tray and delete it there, you can restore it from the system Trash."
           }
         },
         "es" : {
@@ -25151,7 +25151,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No VPN configurations found on this Mac. Please add a VPN connection in System Settings -> VPN first."
+            "value" : "No VPN configurations found on this Mac. Add a VPN connection in System Settings > VPN first."
           }
         },
         "es" : {
@@ -26154,7 +26154,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : ", it is recommended to charge i."
+            "value" : ", it is recommended to charge it."
           }
         },
         "es" : {
@@ -26195,7 +26195,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Turn on Low Power Mode to save"
+            "value" : "Turn on Low Power Mode to save battery."
           }
         },
         "es" : {
@@ -26400,7 +26400,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Empty Location"
+            "value" : "No Location"
           }
         },
         "es" : {
@@ -26974,7 +26974,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Face ID is Ready"
+            "value" : "Face ID Is Ready"
           }
         },
         "es" : {
@@ -27015,7 +27015,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You can now use Face ID to quickly unlock your Mac"
+            "value" : "You can now use Face ID to quickly unlock your Mac."
           }
         },
         "es" : {
@@ -27056,7 +27056,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Position your face in the camera frame and move head to scan.."
+            "value" : "Position your face in the camera frame and move your head to scan."
           }
         },
         "es" : {
@@ -28245,7 +28245,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Make sure that the application has been granted all permissions.."
+            "value" : "Make sure that the app has been granted all permissions."
           }
         },
         "es" : {
@@ -28327,7 +28327,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Give it a star on GitHub – it will really help with promotion...."
+            "value" : "Give it a star on GitHub. It really helps the project."
           }
         },
         "es" : {
@@ -28409,7 +28409,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Join the Telegram channel to stay up-to-date with updates..."
+            "value" : "Join the Telegram channel to stay up to date."
           }
         },
         "es" : {
@@ -28983,7 +28983,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Connect to Wi-Fi, Ethernet or Personal Hotspot to continue."
+            "value" : "Connect to Wi-Fi, Ethernet, or Personal Hotspot to continue."
           }
         },
         "es" : {
@@ -31579,7 +31579,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Preview the software update available live activity."
+            "value" : "Preview the live activity for an available software update."
           }
         },
         "es" : {
@@ -37554,7 +37554,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lock Sound"
+            "value" : "Lock sound"
           }
         },
         "es" : {
@@ -37793,7 +37793,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unlock Sound"
+            "value" : "Unlock sound"
           }
         },
         "es" : {
@@ -41139,7 +41139,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose whether the alert uses the current detailed card or a compact charging-like layout."
+            "value" : "Choose whether the alert uses the current detailed card or a compact layout like the charging alert."
           }
         },
         "es" : {
@@ -42573,7 +42573,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fully Charged"
+            "value" : "Fully charged"
           }
         },
         "es" : {
@@ -43529,7 +43529,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose whether the alert uses the current detailed card or a compact charging-like layout."
+            "value" : "Choose whether the alert uses the current detailed card or a compact layout like the charging alert."
           }
         },
         "es" : {
@@ -44485,7 +44485,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Low Power"
+            "value" : "Low power"
           }
         },
         "es" : {
@@ -48787,7 +48787,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose between a device-focused layout or full device details."
+            "value" : "Choose between a device-focused layout and full device details."
           }
         },
         "es" : {
@@ -51894,7 +51894,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "At time of event"
+            "value" : "At the time of the event"
           }
         },
         "es" : {
@@ -52133,7 +52133,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose how early an event notice appears before it starts."
+            "value" : "Choose how early an event notice appears before the event starts."
           }
         },
         "es" : {
@@ -54762,7 +54762,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Only display events that you created or where you are the organizer."
+            "value" : "Only display events that you created or organize."
           }
         },
         "es" : {
@@ -57630,7 +57630,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Persistent Events"
+            "value" : "Persistent events"
           }
         },
         "es" : {
@@ -57869,7 +57869,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Trigger Events"
+            "value" : "Trigger events"
           }
         },
         "es" : {
@@ -58825,7 +58825,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Show a live activity while files are being downloaded to monitored folders like Downloads, Desktop, and Documents."
+            "value" : "Show a live activity while files download to monitored folders such as Downloads, Desktop, and Documents."
           }
         },
         "es" : {
@@ -60259,7 +60259,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Show live activity in notch when transferring files via AirDrop."
+            "value" : "Show a live activity in the notch while files transfer through AirDrop."
           }
         },
         "es" : {
@@ -60737,7 +60737,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drag&Drop activity"
+            "value" : "Drag & Drop activity"
           }
         },
         "es" : {
@@ -60976,7 +60976,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drag&Drop target"
+            "value" : "Drag & Drop target"
           }
         },
         "es" : {
@@ -61693,7 +61693,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drag&Drop live activity"
+            "value" : "Drag & Drop live activity"
           }
         },
         "es" : {
@@ -63605,7 +63605,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hide the x button on file cards in the expanded Tray."
+            "value" : "Hide the remove button on file cards in the expanded Tray."
           }
         },
         "es" : {
@@ -67763,7 +67763,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Face ID Profile"
+            "value" : "Face ID profile"
           }
         },
         "es" : {
@@ -68002,7 +68002,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Additional Security"
+            "value" : "Additional security"
           }
         },
         "es" : {
@@ -68480,7 +68480,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Biometric face profile and saved security data will be deleted. You will need to set up Face ID again."
+            "value" : "The biometric face profile and saved security data will be deleted. You will need to set up Face ID again."
           }
         },
         "es" : {
@@ -71826,7 +71826,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Compact in Lock"
+            "value" : "Compact in lock"
           }
         },
         "es" : {
@@ -72065,7 +72065,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose how Face ID appears in the notch"
+            "value" : "Choose how Face ID appears in the notch."
           }
         },
         "es" : {
@@ -72543,7 +72543,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Display Style"
+            "value" : "Display style"
           }
         },
         "es" : {
@@ -72782,7 +72782,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unlock your Mac and authenticate actions using facial recognition"
+            "value" : "Unlock your Mac and authenticate actions using facial recognition."
           }
         },
         "es" : {
@@ -73260,7 +73260,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Protects against scanning with static photos or screen images"
+            "value" : "Protect against scanning with static photos or screen images."
           }
         },
         "es" : {
@@ -73499,7 +73499,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Liveness Check"
+            "value" : "Liveness check"
           }
         },
         "es" : {
@@ -73738,7 +73738,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Display a quick Face ID button centered at the bottom of the lock screen"
+            "value" : "Display a quick Face ID button centered at the bottom of the lock screen."
           }
         },
         "es" : {
@@ -73977,7 +73977,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lock Screen Button"
+            "value" : "Lock screen button"
           }
         },
         "es" : {
@@ -74216,7 +74216,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Briefly illuminate screen in white when ambient light is low"
+            "value" : "Briefly light the screen in white when ambient light is low."
           }
         },
         "es" : {
@@ -74455,7 +74455,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Low-Light Screen Assist"
+            "value" : "Low-light screen assist"
           }
         },
         "es" : {
@@ -74694,7 +74694,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Provides an additional level of security by verifying that you are looking at the screen with your eyes open"
+            "value" : "Add another level of security by verifying that you are looking at the screen with your eyes open."
           }
         },
         "es" : {
@@ -74933,7 +74933,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Require Attention"
+            "value" : "Require attention"
           }
         },
         "es" : {
@@ -75172,7 +75172,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prevents unlocking Mac with closed eyes or while sleeping"
+            "value" : "Prevent unlocking your Mac with closed eyes or while you sleep."
           }
         },
         "es" : {
@@ -75411,7 +75411,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Require Open Eyes"
+            "value" : "Require open eyes"
           }
         },
         "es" : {
@@ -75650,7 +75650,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Activate camera immediately on key press or waking locked Mac"
+            "value" : "Activate the camera immediately on a key press or when the locked Mac wakes."
           }
         },
         "es" : {
@@ -75889,7 +75889,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scan on Screen Wake"
+            "value" : "Scan on screen wake"
           }
         },
         "es" : {
@@ -82820,7 +82820,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Night Mode"
+            "value" : "Night mode"
           }
         },
         "es" : {
@@ -83059,7 +83059,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Use the main display while the selected display is unavailable, then move Dynamic Notch back when it returns."
+            "value" : "Use the main display while the selected display is unavailable, then move DynamicNotch back when it returns."
           }
         },
         "es" : {
@@ -85688,7 +85688,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pin Dynamic Notch to one display instead of following the system main display."
+            "value" : "Pin DynamicNotch to one display instead of following the system's main display."
           }
         },
         "es" : {
@@ -86166,7 +86166,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The selected display is unavailable right now. Dynamic Notch will stay hidden until that display returns."
+            "value" : "The selected display is unavailable right now. DynamicNotch will stay hidden until that display returns."
           }
         },
         "es" : {
@@ -86405,7 +86405,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The selected display is unavailable right now. Dynamic Notch is temporarily following the main display."
+            "value" : "The selected display is unavailable right now. DynamicNotch is temporarily following the main display."
           }
         },
         "es" : {
@@ -86644,7 +86644,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Support the project development and donations."
+            "value" : "Support the project's development with a donation."
           }
         },
         "es" : {
@@ -88795,7 +88795,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Home Page activity"
+            "value" : "Home page activity"
           }
         },
         "es" : {
@@ -89034,7 +89034,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Home Page appearance"
+            "value" : "Home page appearance"
           }
         },
         "es" : {
@@ -89273,7 +89273,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose size of page indicator dots."
+            "value" : "Choose the size of the page indicator dots."
           }
         },
         "es" : {
@@ -90707,7 +90707,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Show the Home Page in the notch."
+            "value" : "Show the home page in the notch."
           }
         },
         "es" : {
@@ -90946,7 +90946,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Home Page live activity"
+            "value" : "Home page live activity"
           }
         },
         "es" : {
@@ -91185,7 +91185,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Show dots indicator for active home page index."
+            "value" : "Show a dots indicator for the active home page."
           }
         },
         "es" : {
@@ -93575,7 +93575,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reorder or enable/disable home page cards."
+            "value" : "Reorder, enable, or disable home page cards."
           }
         },
         "es" : {
@@ -95248,7 +95248,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose scroll direction between home page items."
+            "value" : "Choose the scroll direction between home page items."
           }
         },
         "es" : {
@@ -95487,7 +95487,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose scroll direction for home pages."
+            "value" : "Choose the scroll direction for home pages."
           }
         },
         "es" : {
@@ -98116,7 +98116,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enable subtle glow effect around HUD progress indicator."
+            "value" : "Enable a subtle glow effect around the HUD progress indicator."
           }
         },
         "es" : {
@@ -99072,7 +99072,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose between bar and circular indicator."
+            "value" : "Choose between a bar and a circular indicator."
           }
         },
         "es" : {
@@ -99789,7 +99789,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose tint color style for indicator level."
+            "value" : "Choose the tint color style for the indicator level."
           }
         },
         "es" : {
@@ -103135,7 +103135,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose visual presentation style for volume, brightness, and keyboard HUDs."
+            "value" : "Choose the visual presentation style for the volume, brightness, and keyboard HUDs."
           }
         },
         "es" : {
@@ -103374,7 +103374,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Expanded Compact"
+            "value" : "Expanded compact"
           }
         },
         "es" : {
@@ -103613,7 +103613,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Expanded Detailed"
+            "value" : "Expanded detailed"
           }
         },
         "es" : {
@@ -105525,7 +105525,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Play standard macOS volume change sound effect when adjusting volume."
+            "value" : "Play the standard macOS volume change sound when adjusting the volume."
           }
         },
         "es" : {
@@ -106003,7 +106003,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Use system language for settings, or select one of the 39 supported languages."
+            "value" : "Use the system language for settings, or select one of the 39 supported languages."
           }
         },
         "es" : {
@@ -106481,7 +106481,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Use system language for the notch, or select one of the 6 optimized languages."
+            "value" : "Use the system language for the notch, or select one of the 6 optimized languages."
           }
         },
         "es" : {
@@ -106720,7 +106720,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "6 core languages are pixel-optimized with character-equal widths to prevent layout shifts in the notch."
+            "value" : "Six core languages are pixel-optimized with equal character widths to prevent layout shifts in the notch."
           }
         },
         "es" : {
@@ -106959,7 +106959,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Localization only works for settings, the notch remains in English."
+            "value" : "Localization only works for settings. The notch remains in English."
           }
         },
         "es" : {
@@ -117236,7 +117236,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Show the lock-screen live activity during lock and unlock transitions."
+            "value" : "Show the lock screen live activity during lock and unlock transitions."
           }
         },
         "es" : {
@@ -119148,7 +119148,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Played when your Mac locks."
+            "value" : "Plays when your Mac locks."
           }
         },
         "es" : {
@@ -119865,7 +119865,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ is unavailable. Falling back to %@."
+            "value" : "%@ is unavailable. Using %@ instead."
           }
         },
         "es" : {
@@ -120343,7 +120343,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Played when your Mac unlocks."
+            "value" : "Plays when your Mac unlocks."
           }
         },
         "es" : {
@@ -122016,7 +122016,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose which background will be displayed when playing media."
+            "value" : "Choose which background appears while media plays."
           }
         },
         "es" : {
@@ -124167,7 +124167,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lock / unlock sound"
+            "value" : "Lock and unlock sound"
           }
         },
         "es" : {
@@ -125601,7 +125601,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adjust brightness for widgets on the lock screen."
+            "value" : "Adjust the brightness of widgets on the lock screen."
           }
         },
         "es" : {
@@ -127130,7 +127130,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Show a live activity while VPN is connected."
+            "value" : "Show a live activity while a VPN is connected."
           }
         },
         "es" : {
@@ -129281,7 +129281,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose which display Dynamic Notch should use."
+            "value" : "Choose which display DynamicNotch should use."
           }
         },
         "es" : {
@@ -129759,7 +129759,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hide Dynamic Island in full-screen mode when there are no active events. The notch appears when an event occurs and disappears afterward."
+            "value" : "Hide the Dynamic Island in full-screen mode when there are no active events. It appears when an event occurs and disappears afterward."
           }
         },
         "es" : {
@@ -130237,7 +130237,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Automatically hide live activity while the selected display is showing a full-screen space."
+            "value" : "Automatically hide the live activity while the selected display shows a full-screen space."
           }
         },
         "es" : {
@@ -131193,7 +131193,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Constrains windows below the notch area on notchless screens"
+            "value" : "Keep windows below the notch area on screens without a notch."
           }
         },
         "es" : {
@@ -131432,7 +131432,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Window Top Margin"
+            "value" : "Window top margin"
           }
         },
         "es" : {
@@ -131671,7 +131671,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Additional clearance for windows below the menu bar"
+            "value" : "Add clearance for windows below the menu bar."
           }
         },
         "es" : {
@@ -131910,7 +131910,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Top Margin Offset"
+            "value" : "Top margin offset"
           }
         },
         "es" : {
@@ -136212,7 +136212,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Allow vertical swipe gestures over the notch to hide the active activity or restore the recently dismissed one."
+            "value" : "Allow vertical swipes over the notch to hide the current activity or restore the last dismissed one."
           }
         },
         "es" : {
@@ -136451,7 +136451,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Swipe up to hide / down to restore"
+            "value" : "Swipe up to hide, down to restore"
           }
         },
         "es" : {
@@ -137646,7 +137646,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Display Style (No Notch)"
+            "value" : "Display style (no notch)"
           }
         },
         "es" : {
@@ -137885,7 +137885,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drag items to reorder priority. Upper items have higher priority."
+            "value" : "Drag items to reorder them. Higher items have higher priority."
           }
         },
         "es" : {
@@ -140992,7 +140992,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configure priority level for each activity."
+            "value" : "Configure the priority level for each activity."
           }
         },
         "es" : {
@@ -144816,7 +144816,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "External Drives"
+            "value" : "External drives"
           }
         },
         "es" : {
@@ -154232,7 +154232,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Allow controlling System Events to automatically center screenshot and recording preview windows on screen."
+            "value" : "Allow control of System Events to automatically center screenshot and recording preview windows on the screen."
           }
         },
         "es" : {
@@ -156622,7 +156622,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Allow media control event access so play, pause, and track buttons work from Now Playing."
+            "value" : "Allow access to media control events so that the play, pause, and track buttons work from Now Playing."
           }
         },
         "es" : {
@@ -159012,7 +159012,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "With Timer"
+            "value" : "With timer"
           }
         },
         "es" : {
@@ -159729,7 +159729,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Screen Capture activity"
+            "value" : "Screen capture activity"
           }
         },
         "es" : {
@@ -159968,7 +159968,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Screen Recording Appearance"
+            "value" : "Screen recording appearance"
           }
         },
         "es" : {
@@ -160446,7 +160446,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Save Locations"
+            "value" : "Save locations"
           }
         },
         "es" : {
@@ -160924,7 +160924,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adjust auto-dismiss timing of the recording notification."
+            "value" : "Adjust the auto-dismiss timing of the recording notification."
           }
         },
         "es" : {
@@ -164031,7 +164031,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Screen Recording Style"
+            "value" : "Screen recording style"
           }
         },
         "es" : {
@@ -166660,7 +166660,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configure upcoming calendar events settings."
+            "value" : "Configure settings for upcoming calendar events."
           }
         },
         "es" : {
@@ -168333,7 +168333,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drag&Drop"
+            "value" : "Drag & Drop"
           }
         },
         "es" : {
@@ -170006,7 +170006,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configure pages visible on the notch home page."
+            "value" : "Configure the pages visible on the notch home page."
           }
         },
         "es" : {
@@ -178371,7 +178371,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DynamicNotch is a free, open-source project. If you like the app, support its development! Donations motivate to develop the project further."
+            "value" : "DynamicNotch is a free, open-source project. If you like the app, support its development! Donations help the project continue."
           }
         },
         "es" : {
@@ -178610,7 +178610,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "One-time donation via cards or crypto"
+            "value" : "One-time donation by card or crypto"
           }
         },
         "es" : {
@@ -180283,7 +180283,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Launch Dynamic Notch automatically when you sign in."
+            "value" : "Launch DynamicNotch automatically when you sign in."
           }
         },
         "es" : {
@@ -181239,7 +181239,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You can access the menu by right-clicking on the notch area."
+            "value" : "You can open the menu by right-clicking the notch area."
           }
         },
         "es" : {
@@ -182673,7 +182673,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Global keyboard shortcut to open the timer setup in the notch."
+            "value" : "Set a global keyboard shortcut that opens the timer setup in the notch."
           }
         },
         "es" : {
@@ -182912,7 +182912,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Timer Hotkey"
+            "value" : "Timer shortcut"
           }
         },
         "es" : {
@@ -183151,7 +183151,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Play alarm sound when the timer finishes."
+            "value" : "Play an alarm sound when the timer finishes."
           }
         },
         "es" : {
@@ -183629,7 +183629,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose the alarm sound for timer completion."
+            "value" : "Choose the alarm sound for when the timer finishes."
           }
         },
         "es" : {
@@ -185063,7 +185063,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Let Dynamic Notch check for new versions automatically."
+            "value" : "Let DynamicNotch check for new versions automatically."
           }
         },
         "es" : {
@@ -185541,7 +185541,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Download updates in the background and notify you when ready."
+            "value" : "Download updates in the background and notify you when they are ready."
           }
         },
         "es" : {
@@ -195579,7 +195579,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Show the converter collapsed converting state."
+            "value" : "Show the collapsed converter in its converting state."
           }
         },
         "es" : {
@@ -195818,7 +195818,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Show the converter collapsed failed state."
+            "value" : "Show the collapsed converter in its failed state."
           }
         },
         "es" : {
@@ -196057,7 +196057,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Show the converter collapsed success state."
+            "value" : "Show the collapsed converter in its success state."
           }
         },
         "es" : {
@@ -197730,7 +197730,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Show the offline temporary notification with its actions."
+            "value" : "Show the temporary offline notification with its actions."
           }
         },
         "es" : {
@@ -197969,7 +197969,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Show the timer live activity with sample transfer data."
+            "value" : "Show the timer live activity with sample timer data."
           }
         },
         "es" : {
@@ -199164,7 +199164,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Shows the Wi-Fi temporary notification."
+            "value" : "Show the temporary Wi-Fi notification."
           }
         },
         "es" : {
@@ -204421,7 +204421,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Activate camera immediately on key press or waking locked Mac"
+            "value" : "Activate the camera immediately on a key press or when the locked Mac wakes."
           }
         },
         "es" : {
@@ -204899,7 +204899,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Biometric face profile and saved security data will be deleted. You will need to set up Face ID again."
+            "value" : "The biometric face profile and saved security data will be deleted. You will need to set up Face ID again."
           }
         },
         "es" : {
@@ -206333,7 +206333,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Additional Security"
+            "value" : "Additional security"
           }
         },
         "es" : {
@@ -207289,7 +207289,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Protects against scanning with static photos or screen images"
+            "value" : "Protect against scanning with static photos or screen images."
           }
         },
         "es" : {
@@ -208006,7 +208006,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lock Screen Button"
+            "value" : "Lock screen button"
           }
         },
         "es" : {
@@ -208245,7 +208245,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Briefly illuminate screen in white when ambient light is low"
+            "value" : "Briefly light the screen in white when ambient light is low."
           }
         },
         "es" : {
@@ -208484,7 +208484,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Slowly turn head to the right"
+            "value" : "Slowly turn your head to the right"
           }
         },
         "es" : {
@@ -210396,7 +210396,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Display a quick Face ID button centered at the bottom of the lock screen"
+            "value" : "Display a quick Face ID button centered at the bottom of the lock screen."
           }
         },
         "es" : {
@@ -211113,7 +211113,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Low-Light Screen Assist"
+            "value" : "Low-light screen assist"
           }
         },
         "es" : {
@@ -211352,7 +211352,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Position face in frame"
+            "value" : "Position your face in the frame"
           }
         },
         "es" : {
@@ -211591,7 +211591,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Position face in frame and look at camera"
+            "value" : "Position your face in the frame and look at the camera"
           }
         },
         "es" : {
@@ -212069,7 +212069,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prevents unlocking Mac with closed eyes or while sleeping"
+            "value" : "Prevent unlocking your Mac with closed eyes or while you sleep."
           }
         },
         "es" : {
@@ -212308,7 +212308,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Move closer to screen"
+            "value" : "Move closer to the screen"
           }
         },
         "es" : {
@@ -212786,7 +212786,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Liveness Check"
+            "value" : "Liveness check"
           }
         },
         "es" : {
@@ -213503,7 +213503,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Face ID Profile"
+            "value" : "Face ID profile"
           }
         },
         "es" : {
@@ -213742,7 +213742,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unlock your Mac and authenticate actions using facial recognition"
+            "value" : "Unlock your Mac and authenticate actions using facial recognition."
           }
         },
         "es" : {
@@ -214698,7 +214698,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scan on Screen Wake"
+            "value" : "Scan on screen wake"
           }
         },
         "es" : {
@@ -214937,7 +214937,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Turn head slightly to the right"
+            "value" : "Turn your head slightly to the right"
           }
         },
         "es" : {
@@ -215415,7 +215415,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Now turn head to the left"
+            "value" : "Now turn your head to the left"
           }
         },
         "es" : {
@@ -215654,7 +215654,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Now turn head slightly to the left"
+            "value" : "Now turn your head slightly to the left"
           }
         },
         "es" : {
@@ -215893,7 +215893,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Require Open Eyes"
+            "value" : "Require open eyes"
           }
         },
         "es" : {
