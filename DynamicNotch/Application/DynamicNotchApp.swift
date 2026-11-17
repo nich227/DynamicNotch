@@ -10,7 +10,7 @@ struct NotchApp: App {
         MenuBarExtra(isInserted: $isMenuBarIconVisible) {
             MenuBarMenu()
         } label: {
-            Image(systemName: "rectangle.topthird.inset.filled")
+            Image("menuBarIcon")
         }
     }
 }
