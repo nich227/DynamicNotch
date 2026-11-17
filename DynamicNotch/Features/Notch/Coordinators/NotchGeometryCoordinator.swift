@@ -14,6 +14,30 @@ struct CalculatedNotchGeometry {
     let scale: CGFloat
     let topInset: CGFloat
     let isDynamicIsland: Bool
+    let dynamicIslandTopOffset: CGFloat
+}
+
+enum DynamicIslandMenuBarFit {
+    nonisolated static let margin: CGFloat = 2
+
+    /// The factor shrinks an island of the given height to fit inside the menu bar.
+    /// The factor is 1 when the island already fits or the menu bar height is unknown.
+    nonisolated static func scale(islandHeight: CGFloat, menuBarHeight: CGFloat?) -> CGFloat {
+        guard let menuBarHeight, islandHeight > 0 else { return 1 }
+
+        let availableHeight = menuBarHeight - margin * 2
+        guard availableHeight > 0 else { return 1 }
+
+        return min(1, availableHeight / islandHeight)
+    }
+
+    /// This is the distance from the top of the screen that centers the island in the menu bar.
+    /// The value is nil when the menu bar height is unknown or the island is taller than the menu bar.
+    nonisolated static func topInset(islandHeight: CGFloat, menuBarHeight: CGFloat?) -> CGFloat? {
+        guard let menuBarHeight, islandHeight <= menuBarHeight else { return nil }
+
+        return (menuBarHeight - islandHeight) / 2
+    }
 }
 
 @MainActor
@@ -22,6 +46,9 @@ final class NotchGeometryCoordinator: ObservableObject {
     @Published var topInset: CGFloat = 0
 
     var isClosingHeightStaged = false
+
+    nonisolated static let defaultDynamicIslandTopOffset: CGFloat = 9
+    private static let dynamicIslandWidthFactor: CGFloat = 0.85
 
     var isDynamicIsland: Bool {
         topInset == 0
@@ -47,18 +74,42 @@ final class NotchGeometryCoordinator: ObservableObject {
         let heightOffset = CGFloat(notchHeightSetting)
         let baseHeightAdjustment: CGFloat = isDynamicIsland ? 5 : 0
 
-        let finalWidth: CGFloat
-        let finalHeight: CGFloat
+        var finalWidth: CGFloat
+        var finalHeight: CGFloat
 
         if let notchSize = screenMetrics.notchSize {
             let baseWidth = notchSize.width + 14.scaled(by: widthScale) + widthOffset
-            finalWidth = isDynamicIsland ? baseWidth * 0.85 : baseWidth
+            finalWidth = isDynamicIsland ? baseWidth * Self.dynamicIslandWidthFactor : baseWidth
             finalHeight = notchSize.height + heightOffset + baseHeightAdjustment
         } else {
             let baseWidthValue: CGFloat = isDynamicIsland ? 90 : 190
             let baseWidth = (baseWidthValue * widthScale) + widthOffset
-            finalWidth = isDynamicIsland ? baseWidth * 0.85 : baseWidth
+            finalWidth = isDynamicIsland ? baseWidth * Self.dynamicIslandWidthFactor : baseWidth
             finalHeight = 26 + heightOffset + baseHeightAdjustment
+        }
+
+        var dynamicIslandTopOffset = Self.defaultDynamicIslandTopOffset
+
+        if isDynamicIsland {
+            let menuBarHeight = screenMetrics.menuBarHeight
+            let widthSettingOffset = CGFloat(notchWidthSetting) * Self.dynamicIslandWidthFactor
+            let fitScale = DynamicIslandMenuBarFit.scale(
+                islandHeight: finalHeight - heightOffset,
+                menuBarHeight: menuBarHeight
+            )
+
+            if fitScale < 1 {
+                finalWidth = (finalWidth - widthSettingOffset) * fitScale + widthSettingOffset
+                finalHeight = (finalHeight - heightOffset) * fitScale + heightOffset
+            }
+
+            if let menuBarInset = DynamicIslandMenuBarFit.topInset(
+                islandHeight: finalHeight,
+                menuBarHeight: menuBarHeight
+            ) {
+                // The notch window starts 1 point above the top of the screen.
+                dynamicIslandTopOffset = menuBarInset + 1
+            }
         }
 
         return CalculatedNotchGeometry(
@@ -66,7 +117,8 @@ final class NotchGeometryCoordinator: ObservableObject {
             height: finalHeight,
             scale: scale,
             topInset: topInset,
-            isDynamicIsland: isDynamicIsland
+            isDynamicIsland: isDynamicIsland,
+            dynamicIslandTopOffset: dynamicIslandTopOffset
         )
     }
 

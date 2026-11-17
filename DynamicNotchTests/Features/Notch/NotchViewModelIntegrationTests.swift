@@ -1019,7 +1019,7 @@ final class NotchViewModelIntegrationTests: XCTestCase {
         let baseSettings = TestNotchSettings()
         let offsetSettings = TestNotchSettings(notchWidth: 7, notchHeight: 3)
         let screenMetricsProvider: (any NotchSettingsProviding) -> NotchScreenMetrics? = { _ in
-            (width: 1440, topInset: 74, notchSize: CGSize(width: 190, height: 74))
+            (width: 1440, topInset: 74, notchSize: CGSize(width: 190, height: 74), menuBarHeight: nil)
         }
 
         let baseViewModel = NotchViewModel(
@@ -1045,11 +1045,11 @@ final class NotchViewModelIntegrationTests: XCTestCase {
             screenMetricsProvider: { settings in
                 switch settings.displayLocation {
                 case .builtIn:
-                    return (width: 1512, topInset: 74, notchSize: CGSize(width: 206, height: 37))
+                    return (width: 1512, topInset: 74, notchSize: CGSize(width: 206, height: 37), menuBarHeight: nil)
                 case .main:
-                    return (width: 1728, topInset: 0, notchSize: nil)
+                    return (width: 1728, topInset: 0, notchSize: nil, menuBarHeight: nil)
                 case .specific:
-                    return (width: 1600, topInset: 0, notchSize: nil)
+                    return (width: 1600, topInset: 0, notchSize: nil, menuBarHeight: nil)
                 }
             }
         )
@@ -1081,11 +1081,11 @@ final class NotchViewModelIntegrationTests: XCTestCase {
             screenMetricsProvider: { settings in
                 switch settings.screenSelectionPreferences.displayLocation {
                 case .builtIn:
-                    return (width: 1512, topInset: 74, notchSize: CGSize(width: 206, height: 37))
+                    return (width: 1512, topInset: 74, notchSize: CGSize(width: 206, height: 37), menuBarHeight: nil)
                 case .main:
-                    return (width: 1728, topInset: 0, notchSize: nil)
+                    return (width: 1728, topInset: 0, notchSize: nil, menuBarHeight: nil)
                 case .specific:
-                    return (width: 1920, topInset: 0, notchSize: nil)
+                    return (width: 1920, topInset: 0, notchSize: nil, menuBarHeight: nil)
                 }
             }
         )
@@ -1551,7 +1551,7 @@ final class NotchViewModelIntegrationTests: XCTestCase {
         let viewModel = NotchViewModel(
             settings: settings,
             screenMetricsProvider: { _ in
-                (width: 1440, topInset: 42, notchSize: nil)
+                (width: 1440, topInset: 42, notchSize: nil, menuBarHeight: nil)
             }
         )
         TestLifetime.retain(viewModel)
@@ -1561,7 +1561,7 @@ final class NotchViewModelIntegrationTests: XCTestCase {
         let viewModelNoNotch = NotchViewModel(
             settings: settings,
             screenMetricsProvider: { _ in
-                (width: 1440, topInset: 0, notchSize: nil)
+                (width: 1440, topInset: 0, notchSize: nil, menuBarHeight: nil)
             }
         )
         TestLifetime.retain(viewModelNoNotch)
@@ -1577,7 +1577,7 @@ final class NotchViewModelIntegrationTests: XCTestCase {
             hideDelay: 0.05,
             queueDelay: 0,
             screenMetricsProvider: { _ in
-                (width: 1440, topInset: 0, notchSize: nil)
+                (width: 1440, topInset: 0, notchSize: nil, menuBarHeight: nil)
             }
         )
         TestLifetime.retain(viewModel)
@@ -1626,7 +1626,7 @@ final class NotchViewModelIntegrationTests: XCTestCase {
             hideDelay: 0.05,
             queueDelay: 0,
             screenMetricsProvider: { _ in
-                (width: 1440, topInset: 0, notchSize: CGSize(width: 190, height: 32))
+                (width: 1440, topInset: 0, notchSize: CGSize(width: 190, height: 32), menuBarHeight: nil)
             }
         )
         TestLifetime.retain(viewModel)
@@ -1678,7 +1678,7 @@ final class NotchViewModelIntegrationTests: XCTestCase {
             hideDelay: 0.05,
             queueDelay: 0,
             screenMetricsProvider: { _ in
-                (width: 1440, topInset: 74, notchSize: CGSize(width: 190, height: 74))
+                (width: 1440, topInset: 74, notchSize: CGSize(width: 190, height: 74), menuBarHeight: nil)
             }
         )
         TestLifetime.retain(viewModel)
@@ -1720,7 +1720,7 @@ final class NotchViewModelIntegrationTests: XCTestCase {
             hideDelay: 0.05,
             queueDelay: 0,
             screenMetricsProvider: { _ in
-                (width: 1440, topInset: 0, notchSize: CGSize(width: 190, height: 32))
+                (width: 1440, topInset: 0, notchSize: CGSize(width: 190, height: 32), menuBarHeight: nil)
             }
         )
         TestLifetime.retain(viewModel)

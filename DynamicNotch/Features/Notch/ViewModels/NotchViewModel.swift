@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-typealias NotchScreenMetrics = (width: CGFloat, topInset: CGFloat, notchSize: CGSize?)
+typealias NotchScreenMetrics = (width: CGFloat, topInset: CGFloat, notchSize: CGSize?, menuBarHeight: CGFloat?)
 
 @MainActor
 final class NotchViewModel: ObservableObject, NotchCommandDispatching {
@@ -19,6 +19,7 @@ final class NotchViewModel: ObservableObject, NotchCommandDispatching {
     @Published private(set) var isActivityPresentationHidden = false
     @Published private(set) var hasDisplayedContent = false
     @Published private(set) var topInset: CGFloat = 0
+    @Published private(set) var dynamicIslandTopOffset = NotchGeometryCoordinator.defaultDynamicIslandTopOffset
 
     @Published var isLocked = false
     @Published var isHoveringScrollableContent = false
@@ -361,6 +362,7 @@ final class NotchViewModel: ObservableObject, NotchCommandDispatching {
         geometryCoordinator.topInset = calculated.topInset
 
         let applyGeometry = {
+            self.dynamicIslandTopOffset = calculated.dynamicIslandTopOffset
             self.engine.updateBaseGeometry(
                 width: calculated.width,
                 height: calculated.height,

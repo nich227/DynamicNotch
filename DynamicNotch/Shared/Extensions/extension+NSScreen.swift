@@ -98,7 +98,8 @@ extension NSScreen {
         return (
             width: screen.frame.width,
             topInset: screen.safeAreaInsets.top,
-            notchSize: screen.notchSize
+            notchSize: screen.notchSize,
+            menuBarHeight: screen.menuBarHeight
         )
     }
 
@@ -196,5 +197,20 @@ extension NSScreen {
 
     var isNotchless: Bool {
         safeAreaInsets.top == 0
+    }
+
+    /// A screen reports that it has no menu bar when it hides the menu bar. This property then returns the
+    /// standard menu bar height so that the island keeps its size.
+    var menuBarHeight: CGFloat? {
+        let visibleHeight = frame.maxY - visibleFrame.maxY
+        if visibleHeight > 0 {
+            return visibleHeight
+        }
+
+        guard let standardHeight = NSApp.mainMenu?.menuBarHeight, standardHeight > 0 else {
+            return nil
+        }
+
+        return standardHeight
     }
 }
