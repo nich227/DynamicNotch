@@ -109,6 +109,12 @@ struct AboutAppSettingsView: View {
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 50)
+
+                Text("settings.about.copyright")
+                    .font(.system(size: 11))
+                    .foregroundStyle(.tertiary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 50)
             }
         }
     }
@@ -175,7 +181,7 @@ struct AboutAppSettingsView: View {
                 color: .clear,
                 cornerRadius: 30,
                 position: .middle,
-                url: "https://github.com/jackson-storm/DynamicNotch",
+                url: "https://github.com/nich227/DynamicNotch",
                 onRequestInternetAccess: onRequestInternetAccess
             )
             

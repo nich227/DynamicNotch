@@ -73,7 +73,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Copyright © 2025 jackson-storm. All rights reserved."
+            "value": "Copyright © 2026 Kevin Chen. Based on DynamicNotch, © 2025 jackson-storm. Released under the GNU General Public License v3."
           }
         }
       }

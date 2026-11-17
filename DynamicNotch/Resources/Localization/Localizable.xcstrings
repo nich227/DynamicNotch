@@ -10721,6 +10721,16 @@
           }
         }
       }
+    },
+    "settings.about.copyright": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "© 2026 Kevin Chen. Based on DynamicNotch, © 2025 jackson-storm. Released under the GNU GPL v3."
+          }
+        }
+      }
     }
   },
   "version": "1.1"

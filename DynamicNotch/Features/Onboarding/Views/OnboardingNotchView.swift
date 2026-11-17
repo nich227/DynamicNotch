@@ -95,7 +95,7 @@ struct OnboardingNotchView: View {
         case .third:
             HStack {
                 Button(action: {
-                    guard let url = URL(string: "https://github.com/jackson-storm/DynamicNotch") else {
+                    guard let url = URL(string: "https://github.com/nich227/DynamicNotch") else {
                         return
                     }
                     openURL(url)
