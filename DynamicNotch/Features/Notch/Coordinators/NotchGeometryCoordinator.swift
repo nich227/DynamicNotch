@@ -15,6 +15,8 @@ struct CalculatedNotchGeometry {
     let topInset: CGFloat
     let isDynamicIsland: Bool
     let dynamicIslandTopOffset: CGFloat
+    /// This value is the Dynamic Island size before fitting the menu bar. It is nil if the fit did not change the size.
+    let panelBaseSize: CGSize?
 }
 
 enum DynamicIslandMenuBarFit {
@@ -89,6 +91,7 @@ final class NotchGeometryCoordinator: ObservableObject {
         }
 
         var dynamicIslandTopOffset = Self.defaultDynamicIslandTopOffset
+        var panelBaseSize: CGSize?
 
         if isDynamicIsland {
             let menuBarHeight = screenMetrics.menuBarHeight
@@ -99,6 +102,7 @@ final class NotchGeometryCoordinator: ObservableObject {
             )
 
             if fitScale < 1 {
+                panelBaseSize = CGSize(width: finalWidth, height: finalHeight)
                 finalWidth = (finalWidth - widthSettingOffset) * fitScale + widthSettingOffset
                 finalHeight = (finalHeight - heightOffset) * fitScale + heightOffset
             }
@@ -118,7 +122,8 @@ final class NotchGeometryCoordinator: ObservableObject {
             scale: scale,
             topInset: topInset,
             isDynamicIsland: isDynamicIsland,
-            dynamicIslandTopOffset: dynamicIslandTopOffset
+            dynamicIslandTopOffset: dynamicIslandTopOffset,
+            panelBaseSize: panelBaseSize
         )
     }
 

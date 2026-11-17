@@ -168,6 +168,65 @@ final class DynamicIslandMenuBarFitTests: XCTestCase {
         }
     }
 
+    // MARK: - Panels
+
+    @MainActor
+    func testFitReportsTheSizeBeforeTheFit() throws {
+        let fitted = geometry(menuBarHeight: menuBarHeight)
+        let unfitted = geometry(menuBarHeight: nil)
+
+        let panelBaseSize = try XCTUnwrap(fitted.panelBaseSize)
+        XCTAssertEqual(panelBaseSize.width, unfitted.width, accuracy: 0.0001)
+        XCTAssertEqual(panelBaseSize.height, unfitted.height, accuracy: 0.0001)
+        XCTAssertNil(unfitted.panelBaseSize)
+        XCTAssertNil(geometry(menuBarHeight: 60).panelBaseSize)
+    }
+
+    func testPillKeepsTheFittedHeight() {
+        let pill = TestNotchContent(id: "pill", priority: 1, collapsedWidthOffset: 65)
+        let model = fittedModel(content: pill)
+
+        XCTAssertEqual(model.size, CGSize(width: 90 + 65, height: 26))
+    }
+
+    func testPanelKeepsTheSizeItHasWithoutTheFit() {
+        let panel = TestNotchContent(id: "panel", priority: 1, collapsedWidthOffset: 180, collapsedHeightOffset: 100)
+        let model = fittedModel(content: panel)
+
+        XCTAssertEqual(model.size, CGSize(width: 107 + 180, height: 31 + 100))
+    }
+
+    func testExpandedPanelKeepsTheSizeItHasWithoutTheFit() {
+        let player = TestNotchContent(
+            id: "player",
+            priority: 1,
+            isExpandable: true,
+            expandedWidthOffset: 210,
+            expandedHeightOffset: 150
+        )
+        var model = fittedModel(content: player)
+        model.isExpanded = true
+
+        // The Dynamic Island adds 40 points to the expanded width.
+        XCTAssertEqual(model.size, CGSize(width: 107 + 210 + 40, height: 31 + 150))
+    }
+
+    func testPanelUsesTheBaseSizeWhenTheIslandIsNotFitted() {
+        let panel = TestNotchContent(id: "panel", priority: 1, collapsedWidthOffset: 180, collapsedHeightOffset: 100)
+        let model = NotchModel(liveActivityContent: panel, baseWidth: 107, baseHeight: 31, isDynamicIsland: true)
+
+        XCTAssertEqual(model.size, CGSize(width: 107 + 180, height: 31 + 100))
+    }
+
+    func testModelsWithDifferentPanelBaseSizesAreNotEqual() {
+        let content = TestNotchContent(id: "pill", priority: 1)
+        let fitted = fittedModel(content: content)
+        var other = fitted
+        other.panelBaseSize = CGSize(width: 120, height: 31)
+
+        XCTAssertNotEqual(fitted, other)
+    }
+
     // MARK: - View model
 
     @MainActor
@@ -184,6 +243,7 @@ final class DynamicIslandMenuBarFitTests: XCTestCase {
         XCTAssertEqual(viewModel.notchModel.baseHeight, 26, accuracy: 0.0001)
         XCTAssertEqual(viewModel.notchModel.size.height, 26, accuracy: 0.0001)
         XCTAssertEqual(viewModel.dynamicIslandTopOffset, 3, accuracy: 0.0001)
+        XCTAssertEqual(viewModel.notchModel.panelBaseSize?.height ?? 0, 31, accuracy: 0.0001)
     }
 
     @MainActor
@@ -198,9 +258,17 @@ final class DynamicIslandMenuBarFitTests: XCTestCase {
 
         XCTAssertEqual(viewModel.notchModel.baseHeight, 31, accuracy: 0.0001)
         XCTAssertEqual(viewModel.dynamicIslandTopOffset, 9, accuracy: 0.0001)
+        XCTAssertNil(viewModel.notchModel.panelBaseSize)
     }
 
     // MARK: - Helpers
+
+    /// The fitted island is 90 x 26 points, compared with 107 x 31 points without the fit.
+    private func fittedModel(content: TestNotchContent) -> NotchModel {
+        var model = NotchModel(liveActivityContent: content, baseWidth: 90, baseHeight: 26, isDynamicIsland: true)
+        model.panelBaseSize = CGSize(width: 107, height: 31)
+        return model
+    }
 
     @MainActor
     private func geometry(

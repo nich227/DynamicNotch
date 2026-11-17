@@ -45,6 +45,10 @@ struct NotchModel: Equatable {
     /// Base height of the physical notch or Dynamic Island pill.
     var baseHeight: CGFloat = 38
 
+    /// This value is the base size of the Dynamic Island pill before it is fitted into the menu bar. Content taller
+    /// than the pill uses this size for layout. The value is nil when the pill is not fitted.
+    var panelBaseSize: CGSize? = nil
+
     /// Interactive scale multiplier for gesture stretch and bounce animations.
     var scale: CGFloat = 1.0
 
@@ -75,15 +79,23 @@ struct NotchModel: Equatable {
 
         if isPresentingExpanded {
             if isDynamicIsland {
-                return content.expandedDynamicIslandSize(baseWidth: baseWidth, baseHeight: baseHeight)
+                return dynamicIslandSize { content.expandedDynamicIslandSize(baseWidth: $0, baseHeight: $1) }
             }
             return content.expandedSize(baseWidth: baseWidth, baseHeight: baseHeight)
         }
 
         if isDynamicIsland {
-            return content.compactDynamicIslandSize(baseWidth: baseWidth, baseHeight: baseHeight)
+            return dynamicIslandSize { content.compactDynamicIslandSize(baseWidth: $0, baseHeight: $1) }
         }
         return content.compactSize(baseWidth: baseWidth, baseHeight: baseHeight)
+    }
+
+    /// A pill keeps the height of the fitted island, so it stays inside the menu bar. A panel is taller than the
+    /// island and extends below the menu bar. The panel's size comes from the size of the island before the fit.
+    private func dynamicIslandSize(_ size: (CGFloat, CGFloat) -> CGSize) -> CGSize {
+        let fitted = size(baseWidth, baseHeight)
+        guard let panelBaseSize, fitted.height > baseHeight else { return fitted }
+        return size(panelBaseSize.width, panelBaseSize.height)
     }
 
     /// Corner radii (top and bottom curves) for current presentation mode and hardware style.
@@ -191,6 +203,7 @@ struct NotchModel: Equatable {
         lhs.isExpanded == rhs.isExpanded &&
         lhs.baseWidth == rhs.baseWidth &&
         lhs.baseHeight == rhs.baseHeight &&
+        lhs.panelBaseSize == rhs.panelBaseSize &&
         lhs.scale == rhs.scale &&
         lhs.isDynamicIsland == rhs.isDynamicIsland &&
         lhs.updateToken == rhs.updateToken

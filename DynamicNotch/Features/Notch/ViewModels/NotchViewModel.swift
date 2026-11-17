@@ -367,7 +367,8 @@ final class NotchViewModel: ObservableObject, NotchCommandDispatching {
                 width: calculated.width,
                 height: calculated.height,
                 scale: calculated.scale,
-                isDynamicIsland: calculated.isDynamicIsland
+                isDynamicIsland: calculated.isDynamicIsland,
+                panelBaseSize: calculated.panelBaseSize
             )
         }
 

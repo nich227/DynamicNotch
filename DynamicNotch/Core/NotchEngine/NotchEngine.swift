@@ -115,15 +115,23 @@ final class NotchEngine: ObservableObject {
     }
 
     /// Updates the hardware geometry metrics (Notch bezel vs Dynamic Island floating pill).
-    func updateBaseGeometry(width: CGFloat, height: CGFloat, scale: CGFloat, isDynamicIsland: Bool) {
+    func updateBaseGeometry(
+        width: CGFloat,
+        height: CGFloat,
+        scale: CGFloat,
+        isDynamicIsland: Bool,
+        panelBaseSize: CGSize? = nil
+    ) {
         guard notchModel.baseWidth != width ||
               notchModel.baseHeight != height ||
+              notchModel.panelBaseSize != panelBaseSize ||
               notchModel.scale != scale ||
               notchModel.isDynamicIsland != isDynamicIsland else {
             return
         }
         notchModel.baseWidth = width
         notchModel.baseHeight = height
+        notchModel.panelBaseSize = panelBaseSize
         notchModel.scale = scale
         notchModel.isDynamicIsland = isDynamicIsland
         notchModel.updateToken = UUID()
