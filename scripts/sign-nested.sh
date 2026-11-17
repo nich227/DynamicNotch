@@ -1,10 +1,13 @@
 #!/bin/bash
-# Code signing uses the Developer ID certificate for every executable inside the app,
-# innermost first, and then for the app itself. Xcode signs the app and the frameworks
-# it embeds. It does not sign the helpers inside Sparkle or the MediaRemote adapter in
-# Resources. Notarization refuses a bundle if any executable is unsigned.
+# This script signs every executable inside the app, innermost first, and then the app
+# itself. The app is built without a signature, so this script is the only place that
+# signs it.
+# Notarization refuses a bundle if any executable is unsigned.
 #
 #   sign-nested.sh <app> <identity> <keychain> <entitlements>
+#
+# Pass "" as the keychain to search the default keychains. Pass "-" as the identity for
+# an ad hoc signature, which is enough to run the app on the Mac that built it.
 set -euo pipefail
 
 APP="$1"
@@ -12,9 +15,17 @@ IDENTITY="$2"
 KEYCHAIN="$3"
 ENTITLEMENTS="$4"
 
+OPTIONS=(--force --options runtime --sign "$IDENTITY")
+# An ad hoc signature has no certificate, so there is nothing to timestamp.
+if [ "$IDENTITY" != "-" ]; then
+  OPTIONS+=(--timestamp)
+fi
+if [ -n "$KEYCHAIN" ]; then
+  OPTIONS+=(--keychain "$KEYCHAIN")
+fi
+
 sign() {
-  codesign --force --options runtime --timestamp \
-    --sign "$IDENTITY" --keychain "$KEYCHAIN" "$@"
+  codesign "${OPTIONS[@]}" "$@"
 }
 
 # -depth lists a directory after its contents, so a helper is signed before the

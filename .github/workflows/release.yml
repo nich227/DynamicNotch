@@ -67,11 +67,7 @@ jobs:
             echo "no Developer ID Application identity in the imported certificate" >&2
             exit 1
           fi
-          # The part of the identity in parentheses identifies the team, so the
-          # repository does not have to name it.
-          TEAM="$(printf '%s' "$IDENTITY" | sed 's/.*(\([A-Z0-9]*\))$/\1/')"
           echo "identity=$IDENTITY" >> "$GITHUB_OUTPUT"
-          echo "team=$TEAM" >> "$GITHUB_OUTPUT"
           echo "keychain=$KEYCHAIN" >> "$GITHUB_OUTPUT"
 
       - name: build
@@ -85,14 +81,12 @@ jobs:
             -derivedDataPath dd \
             MARKETING_VERSION=${{ steps.v.outputs.version }} \
             CURRENT_PROJECT_VERSION=${{ steps.v.outputs.build }} \
-            CODE_SIGN_STYLE=Manual \
-            CODE_SIGN_IDENTITY="${{ steps.keychain.outputs.identity }}" \
-            "CODE_SIGN_IDENTITY[sdk=macosx*]=${{ steps.keychain.outputs.identity }}" \
-            DEVELOPMENT_TEAM=${{ steps.keychain.outputs.team }} \
-            OTHER_CODE_SIGN_FLAGS="--timestamp --keychain ${{ steps.keychain.outputs.keychain }}" \
+            CODE_SIGNING_ALLOWED=NO \
             build | tail -20
 
-      - name: sign the nested executables
+      # Xcode builds without a signature, and this script signs everything afterward,
+      # the same way scripts/build-signed.sh does on a Mac.
+      - name: sign the app
         run: >
           ./scripts/sign-nested.sh "$APP"
           "${{ steps.keychain.outputs.identity }}"
@@ -158,14 +152,7 @@ jobs:
         run: ditto -c -k --sequesterRsrc --keepParent "$APP" "DynamicNotch-${{ steps.v.outputs.version }}.zip"
 
       - name: disk image
-        run: |
-          set -euo pipefail
-          STAGING="$RUNNER_TEMP/dmg"
-          mkdir -p "$STAGING"
-          ditto "$APP" "$STAGING/DynamicNotch.app"
-          ln -s /Applications "$STAGING/Applications"
-          hdiutil create -volname DynamicNotch -srcfolder "$STAGING" -ov -format UDZO \
-            "DynamicNotch-${{ steps.v.outputs.version }}.dmg"
+        run: ./scripts/make-dmg.sh "$APP" "${{ steps.v.outputs.version }}" "DynamicNotch-${{ steps.v.outputs.version }}.dmg"
 
       # The app inside is signed and stapled already, and the image needs its own
       # signature and its own ticket: a download carries the quarantine bit on the image,

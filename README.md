@@ -79,6 +79,15 @@ Pushing a tag such as `v1.0.1` runs `.github/workflows/release.yml`. The workflo
 
 Release notes for a version come from `docs/release-notes/<version>.md`.
 
+### Build a signed copy on your Mac
+
+`scripts/build-signed.sh` builds the app, signs it, and writes a zip and a disk image to `build/release`. The repository holds no credentials. The script reads the signing identity from your keychain and takes the rest from the environment:
+
+- `CODE_SIGN_IDENTITY` names the identity. The default is the first Developer ID Application identity in the keychain. Set it to `-` for an ad-hoc signature.
+- `NOTARY_PROFILE` names a notarytool keychain profile. When it is set, the script notarizes and staples the app and the disk image.
+
+`scripts/make-dmg.sh <app> <version>` makes only the disk image, from an app that is already built.
+
 ## Acknowledgments
 
 - This fork is based on [DynamicNotch](https://github.com/jackson-storm/DynamicNotch) by jackson-storm.
