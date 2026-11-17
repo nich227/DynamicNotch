@@ -116,10 +116,15 @@ final class NotchGeometryCoordinator: ObservableObject {
             }
         }
 
+        // The sides of a pill have a fixed width. Thus, content on a display without a notch uses the damped scale
+        // of the island. With the full scale, the padding moves content under the middle of the island on a wide
+        // display.
+        let contentScale = isDynamicIsland ? widthScale : scale
+
         return CalculatedNotchGeometry(
             width: finalWidth,
             height: finalHeight,
-            scale: scale,
+            scale: contentScale,
             topInset: topInset,
             isDynamicIsland: isDynamicIsland,
             dynamicIslandTopOffset: dynamicIslandTopOffset,

@@ -168,6 +168,45 @@ final class DynamicIslandMenuBarFitTests: XCTestCase {
         }
     }
 
+    // MARK: - Content scale
+
+    @MainActor
+    func testContentOnAWideDisplayWithoutANotchUsesTheDampedScale() {
+        // 3008 / 1440 is about 2.09. The island grows by 35% of the amount above 1.
+        let expected = 1 + (3008.0 / 1440.0 - 1) * 0.35
+
+        XCTAssertEqual(geometry(menuBarHeight: menuBarHeight).scale, expected, accuracy: 0.0001)
+        XCTAssertEqual(geometry(menuBarHeight: nil).scale, expected, accuracy: 0.0001)
+    }
+
+    @MainActor
+    func testContentOnASmallDisplayWithoutANotchKeepsItsScale() {
+        let small = geometry(metrics: (width: 1280, topInset: 0, notchSize: nil, menuBarHeight: 24))
+
+        XCTAssertEqual(small.scale, 1280.0 / 1440.0, accuracy: 0.0001)
+    }
+
+    @MainActor
+    func testContentOnADisplayWithANotchKeepsTheFullScale() {
+        let notched = geometry(
+            metrics: (width: 1728, topInset: 32, notchSize: CGSize(width: 185, height: 32), menuBarHeight: 32)
+        )
+
+        XCTAssertFalse(notched.isDynamicIsland)
+        XCTAssertEqual(notched.scale, 1728.0 / 1440.0, accuracy: 0.0001)
+    }
+
+    @MainActor
+    func testNowPlayingPillContentStaysBesideTheMiddleOfTheIsland() {
+        let fitted = geometry(menuBarHeight: menuBarHeight)
+        // The pill is 65 points wider than the island, so each side is 32.5 points wide. The artwork is 20 points
+        // wide after 7 scaled points, and the equalizer is 18 points wide before 9 scaled points.
+        let side: CGFloat = 65 / 2
+
+        XCTAssertLessThanOrEqual(7 * fitted.scale + 20, side)
+        XCTAssertLessThanOrEqual(9 * fitted.scale + 18, side)
+    }
+
     // MARK: - Panels
 
     @MainActor
