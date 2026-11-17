@@ -50,6 +50,7 @@ struct SettingsRootView: View {
     @State private var selectedGeneralTab: GeneralTab = .notch
     @State private var navigationPath: [SettingsSubPage] = []
     @State private var availableDisplays = NSScreen.availableNotchDisplays()
+    @State private var localizationMemo = SettingsLocalizationMemo()
     @ObservedObject private var updater = SparkleUpdater.shared
 
     init(container: AppContainer) {
@@ -112,7 +113,7 @@ struct SettingsRootView: View {
     }
 
     private func localized(_ key: String, fallback: String? = nil) -> String {
-        settingsViewModel.application.appLanguage.locale.dn(key, fallback: fallback)
+        localizationMemo.string(key, fallback: fallback, locale: settingsViewModel.application.appLanguage.locale)
     }
 
     var body: some View {
@@ -700,5 +701,48 @@ private struct VisualEffectView: NSViewRepresentable {
         nsView.material = material
         nsView.blendingMode = blendingMode
         nsView.state = state
+    }
+}
+
+final class SettingsLocalizationMemo {
+    private struct LocaleKey: Equatable {
+        let identifier: String
+        let preferredLocalization: String?
+    }
+
+    private struct StringKey: Hashable {
+        let key: String
+        let fallback: String?
+    }
+
+    private let lookup: (String, String?, Locale) -> String
+    private let preferredLocalization: () -> String?
+    private var localeKey: LocaleKey?
+    private var strings: [StringKey: String] = [:]
+
+    init(
+        lookup: @escaping (String, String?, Locale) -> String = { $2.dn($0, fallback: $1) },
+        preferredLocalization: @escaping () -> String? = { Bundle.main.preferredLocalizations.first }
+    ) {
+        self.lookup = lookup
+        self.preferredLocalization = preferredLocalization
+    }
+
+    func string(_ key: String, fallback: String?, locale: Locale) -> String {
+        validate(for: locale)
+        let stringKey = StringKey(key: key, fallback: fallback)
+        if let cached = strings[stringKey] {
+            return cached
+        }
+        let value = lookup(key, fallback, locale)
+        strings[stringKey] = value
+        return value
+    }
+
+    private func validate(for locale: Locale) {
+        let key = LocaleKey(identifier: locale.identifier, preferredLocalization: preferredLocalization())
+        guard key != localeKey else { return }
+        localeKey = key
+        strings.removeAll()
     }
 }
