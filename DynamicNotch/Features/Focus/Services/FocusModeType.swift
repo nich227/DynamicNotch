@@ -221,16 +221,46 @@ internal final class FocusMetadataReader {
         let tintColorName: String?
     }
 
+    private struct FileSignature: Equatable {
+        let modificationDate: Date?
+        let size: Int?
+    }
+
+    private var cachedSignature: FileSignature?
+    private var cachedRoot: DNDConfigRoot?
+
     private init() {}
     static let shared = FocusMetadataReader()
+
+    /// The reader decodes the file again only when its modification date or size changes. The
+    /// reader does not cache a failed read, so granting Full Disk Access later takes effect on the
+    /// next lookup.
+    private func loadRoot() throws -> DNDConfigRoot {
+        let attributes = try? FileManager.default.attributesOfItem(atPath: pathToDatabase.path)
+        let signature = attributes.map {
+            FileSignature(
+                modificationDate: $0[.modificationDate] as? Date,
+                size: ($0[.size] as? NSNumber)?.intValue
+            )
+        }
+
+        if let signature, signature == cachedSignature, let cachedRoot {
+            return cachedRoot
+        }
+
+        let data = try Data(contentsOf: pathToDatabase)
+        let root = try JSONDecoder().decode(DNDConfigRoot.self, from: data)
+        cachedSignature = signature
+        cachedRoot = signature == nil ? nil : root
+        return root
+    }
 
     private func getModeConfig(for focusName: String, identifier: String? = nil) -> DNDMode? {
         let trimmedName = focusName.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedIdentifier = identifier?.trimmingCharacters(in: .whitespacesAndNewlines)
 
         do {
-            let data = try Data(contentsOf: pathToDatabase)
-            let root = try JSONDecoder().decode(DNDConfigRoot.self, from: data)
+            let root = try loadRoot()
 
             for entry in root.data {
                 for wrapper in entry.modeConfigurations.values {
