@@ -5,8 +5,22 @@ nonisolated final class FocusLogStream: @unchecked Sendable {
         label: "com.dynamicisland.focus.logstream",
         qos: .utility
     )
+    static let logStreamCommand = [
+        "/usr/bin/log",
+        "stream",
+        "--no-backtrace",
+        "--style",
+        "compact",
+        "--level",
+        "info",
+        "--predicate",
+        "process == \"duetexpertd\" AND (eventMessage CONTAINS \"semanticModeIdentifier\" || eventMessage CONTAINS \"active mode assertion\" || eventMessage CONTAINS \"activeModeIdentifier\")"
+    ]
+
+    private let command: [String]
     private var process: Process?
     private var pipe: Pipe?
+    private var lifeline: Pipe?
     private var buffer = Data()
     private var isRunning = false
     private var didTerminate = false
@@ -17,23 +31,16 @@ nonisolated final class FocusLogStream: @unchecked Sendable {
 
     var onMetadataUpdate: ((String?, String?) -> Void)?
 
+    init(command: [String] = FocusLogStream.logStreamCommand) {
+        self.command = command
+    }
+
     func start() {
         queue.async { [weak self] in
             guard let self = self else { return }
             guard !self.isRunning else { return }
 
-            let process = Process()
-            process.executableURL = URL(fileURLWithPath: "/usr/bin/log")
-            process.arguments = [
-                "stream",
-                "--no-backtrace",
-                "--style",
-                "compact",
-                "--level",
-                "info",
-                "--predicate",
-                "process == \"duetexpertd\" AND (eventMessage CONTAINS \"semanticModeIdentifier\" || eventMessage CONTAINS \"active mode assertion\" || eventMessage CONTAINS \"activeModeIdentifier\")"
-            ]
+            let (process, lifeline) = ParentBoundProcess.make(command: self.command)
 
             let pipe = Pipe()
             process.standardOutput = pipe
@@ -65,6 +72,7 @@ nonisolated final class FocusLogStream: @unchecked Sendable {
                 try process.run()
                 self.process = process
                 self.pipe = pipe
+                self.lifeline = lifeline
                 self.isRunning = true
                 self.didTerminate = false
                 debugPrint("[FocusLogStream] Started unified log tail for com.apple.focus")
@@ -217,6 +225,9 @@ nonisolated final class FocusLogStream: @unchecked Sendable {
         pipe?.fileHandleForReading.readabilityHandler = nil
         pipe?.fileHandleForReading.closeFile()
         pipe = nil
+
+        lifeline?.fileHandleForWriting.closeFile()
+        lifeline = nil
 
         process = nil
         buffer.removeAll(keepingCapacity: false)
