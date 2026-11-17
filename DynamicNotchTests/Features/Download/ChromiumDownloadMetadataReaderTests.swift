@@ -78,6 +78,67 @@ final class ChromiumDownloadMetadataReaderTests: XCTestCase {
         XCTAssertNil(info)
     }
 
+    func testReusedReaderSeesInPlaceUpdateToHistory() throws {
+        let tempDir = makeTemporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+
+        let dbURL = tempDir.appendingPathComponent("History")
+        try createChromiumDownloadsDatabase(at: dbURL)
+
+        let crdownloadPath = tempDir.appendingPathComponent("movie.mkv.crdownload").path
+        let targetPath = tempDir.appendingPathComponent("movie.mkv").path
+        try insertDownloadRow(
+            in: dbURL,
+            currentPath: crdownloadPath,
+            targetPath: targetPath,
+            receivedBytes: 10,
+            totalBytes: 1_000,
+            state: 0
+        )
+
+        let reader = ChromiumDownloadMetadataReader(explicitDatabaseURLs: [dbURL])
+        let fileURL = URL(fileURLWithPath: crdownloadPath)
+
+        XCTAssertEqual(reader.downloadInfo(for: fileURL)?.totalBytes, 1_000)
+        XCTAssertEqual(reader.downloadInfo(for: fileURL)?.totalBytes, 1_000)
+
+        let sizeBefore = try FileManager.default.attributesOfItem(atPath: dbURL.path)[.size] as? Int
+        try execute("UPDATE downloads SET total_bytes = 2000;", in: dbURL)
+        let sizeAfter = try FileManager.default.attributesOfItem(atPath: dbURL.path)[.size] as? Int
+        XCTAssertEqual(sizeBefore, sizeAfter)
+
+        XCTAssertEqual(reader.downloadInfo(for: fileURL)?.totalBytes, 2_000)
+    }
+
+    func testReusedReaderSeesRowInsertedAfterMiss() throws {
+        let tempDir = makeTemporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+
+        let dbURL = tempDir.appendingPathComponent("History")
+        try createChromiumDownloadsDatabase(at: dbURL)
+
+        let crdownloadPath = tempDir.appendingPathComponent("archive.zip.crdownload").path
+        let targetPath = tempDir.appendingPathComponent("archive.zip").path
+        let reader = ChromiumDownloadMetadataReader(explicitDatabaseURLs: [dbURL])
+        let fileURL = URL(fileURLWithPath: crdownloadPath)
+
+        XCTAssertNil(reader.downloadInfo(for: fileURL))
+        XCTAssertNil(reader.downloadInfo(for: fileURL))
+
+        try insertDownloadRow(
+            in: dbURL,
+            currentPath: crdownloadPath,
+            targetPath: targetPath,
+            receivedBytes: 5,
+            totalBytes: 500,
+            state: 0
+        )
+
+        let info = reader.downloadInfo(for: fileURL)
+        XCTAssertEqual(info?.totalBytes, 500)
+        XCTAssertEqual(info?.targetPath, targetPath)
+    }
+
     func testFolderFileDownloadMonitorCalculatesExactProgressUsingChromiumMetadata() {
         let tempDir = makeTemporaryDirectory()
         defer { try? FileManager.default.removeItem(at: tempDir) }
@@ -192,5 +253,14 @@ private extension ChromiumDownloadMetadataReaderTests {
         sqlite3_bind_int(stmt, 5, state)
 
         XCTAssertEqual(sqlite3_step(stmt), SQLITE_DONE)
+    }
+
+    func execute(_ sql: String, in databaseURL: URL) throws {
+        var db: OpaquePointer?
+        guard sqlite3_open(databaseURL.path, &db) == SQLITE_OK, let db else {
+            throw XCTSkip("Failed to open SQLite DB")
+        }
+        defer { sqlite3_close(db) }
+        XCTAssertEqual(sqlite3_exec(db, sql, nil, nil, nil), SQLITE_OK)
     }
 }

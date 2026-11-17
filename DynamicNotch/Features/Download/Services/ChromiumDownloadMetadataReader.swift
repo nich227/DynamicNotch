@@ -23,6 +23,37 @@ nonisolated final class ChromiumDownloadMetadataReader: @unchecked Sendable {
     private var lastCacheRefresh: Date = .distantPast
     private let cacheTTL: TimeInterval = 30.0
 
+    private var cachedStamps: [DatabaseStamp] = []
+    private var cachedResults: [PathPair: ChromiumDownloadInfo?] = [:]
+    private static let maxCachedResults = 64
+
+    private struct FileStamp: Equatable {
+        let device: Int64
+        let inode: UInt64
+        let size: Int64
+        let modificationSeconds: Int
+        let modificationNanoseconds: Int
+        let changeSeconds: Int
+        let changeNanoseconds: Int
+    }
+
+    private struct DatabaseStamp: Equatable {
+        let url: URL
+        let main: FileStamp?
+        let wal: FileStamp?
+    }
+
+    private struct PathPair: Hashable {
+        let currentPath: String
+        let targetPath: String
+    }
+
+    private enum QueryOutcome {
+        case found(ChromiumDownloadInfo)
+        case notFound
+        case failed
+    }
+
     private static let candidateBrowserSubpaths: [String] = [
         "net.imput.helium",
         "Google/Chrome",
@@ -64,14 +95,71 @@ nonisolated final class ChromiumDownloadMetadataReader: @unchecked Sendable {
 
         let currentPath = fileURL.standardizedFileURL.path
         let targetPath = fileURL.deletingPathExtension().standardizedFileURL.path
+        let key = PathPair(currentPath: currentPath, targetPath: targetPath)
+
+        // Each call reads stamps before querying. A racing commit can only store a result under an
+        // older stamp, which the next call discards.
+        let stamps = databases.map(Self.databaseStamp(for:))
+
+        lock.lock()
+        if cachedStamps != stamps {
+            cachedStamps = stamps
+            cachedResults.removeAll()
+        }
+        if let cached = cachedResults[key] {
+            lock.unlock()
+            return cached
+        }
+        lock.unlock()
+
+        var result: ChromiumDownloadInfo?
+        var isCacheable = true
 
         for databaseURL in databases {
-            if let info = queryDownload(in: databaseURL, currentPath: currentPath, targetPath: targetPath) {
-                return info
+            let outcome = queryDownload(in: databaseURL, currentPath: currentPath, targetPath: targetPath)
+            if case .found(let info) = outcome {
+                result = info
+                break
+            }
+            if case .failed = outcome {
+                isCacheable = false
             }
         }
 
-        return nil
+        if isCacheable {
+            lock.lock()
+            if cachedStamps == stamps {
+                if cachedResults.count >= Self.maxCachedResults {
+                    cachedResults.removeAll()
+                }
+                cachedResults[key] = .some(result)
+            }
+            lock.unlock()
+        }
+
+        return result
+    }
+
+    private static func databaseStamp(for databaseURL: URL) -> DatabaseStamp {
+        DatabaseStamp(
+            url: databaseURL,
+            main: fileStamp(atPath: databaseURL.path),
+            wal: fileStamp(atPath: databaseURL.path + "-wal")
+        )
+    }
+
+    private static func fileStamp(atPath path: String) -> FileStamp? {
+        var info = stat()
+        guard stat(path, &info) == 0 else { return nil }
+        return FileStamp(
+            device: Int64(info.st_dev),
+            inode: UInt64(info.st_ino),
+            size: Int64(info.st_size),
+            modificationSeconds: info.st_mtimespec.tv_sec,
+            modificationNanoseconds: info.st_mtimespec.tv_nsec,
+            changeSeconds: info.st_ctimespec.tv_sec,
+            changeNanoseconds: info.st_ctimespec.tv_nsec
+        )
     }
 
     private func resolvedDatabaseURLs() -> [URL] {
@@ -128,7 +216,7 @@ nonisolated final class ChromiumDownloadMetadataReader: @unchecked Sendable {
         in databaseURL: URL,
         currentPath: String,
         targetPath: String
-    ) -> ChromiumDownloadInfo? {
+    ) -> QueryOutcome {
         var database: OpaquePointer?
         let flags = SQLITE_OPEN_READONLY | SQLITE_OPEN_URI
         let uriPath = "file://\(databaseURL.path)?mode=ro"
@@ -136,7 +224,7 @@ nonisolated final class ChromiumDownloadMetadataReader: @unchecked Sendable {
         guard sqlite3_open_v2(uriPath, &database, flags, nil) == SQLITE_OK,
               let database else {
             if let database { sqlite3_close(database) }
-            return nil
+            return .failed
         }
 
         defer {
@@ -157,7 +245,7 @@ nonisolated final class ChromiumDownloadMetadataReader: @unchecked Sendable {
         guard sqlite3_prepare_v2(database, query, -1, &statement, nil) == SQLITE_OK,
               let statement else {
             if let statement { sqlite3_finalize(statement) }
-            return nil
+            return .failed
         }
 
         defer {
@@ -170,8 +258,9 @@ nonisolated final class ChromiumDownloadMetadataReader: @unchecked Sendable {
         sqlite3_bind_text(statement, 3, targetPath, -1, transient)
         sqlite3_bind_text(statement, 4, currentPath, -1, transient)
 
-        guard sqlite3_step(statement) == SQLITE_ROW else {
-            return nil
+        let stepResult = sqlite3_step(statement)
+        guard stepResult == SQLITE_ROW else {
+            return stepResult == SQLITE_DONE ? .notFound : .failed
         }
 
         let totalBytes = sqlite3_column_int64(statement, 0)
@@ -184,9 +273,9 @@ nonisolated final class ChromiumDownloadMetadataReader: @unchecked Sendable {
         }()
 
         guard totalBytes > 0 else {
-            return nil
+            return .notFound
         }
 
-        return ChromiumDownloadInfo(totalBytes: totalBytes, targetPath: resolvedTargetPath)
+        return .found(ChromiumDownloadInfo(totalBytes: totalBytes, targetPath: resolvedTargetPath))
     }
 }
