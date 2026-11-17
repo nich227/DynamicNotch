@@ -25,6 +25,7 @@ final class DoNotDisturbManager: ObservableObject {
     // slow poll fallback, since notifications/log are unreliable on macOS 26.
     private var assertionsSource: DispatchSourceFileSystemObject?
     private var assertionsPollTimer: Timer?
+    private nonisolated let assertionStateMemo = FocusAssertionStateMemo()
 
     private init() {
         focusLogStream.onMetadataUpdate = { [weak self] identifier, name in
@@ -271,8 +272,10 @@ final class DoNotDisturbManager: ObservableObject {
     }
 
     private nonisolated func triggerAssertionRefresh() {
+        let memo = assertionStateMemo
         metadataExtractionQueue.async { [weak self] in
-            let state = FocusAssertionsReader.shared.readState()
+            let reader = FocusAssertionsReader.shared
+            let state = memo.state(at: reader.fileURL, read: reader.readState(at:))
             Task { @MainActor [weak self] in
                 self?.applyAssertionState(state)
             }

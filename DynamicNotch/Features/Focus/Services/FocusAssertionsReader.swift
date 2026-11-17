@@ -48,7 +48,11 @@ nonisolated final class FocusAssertionsReader: Sendable {
     }
 
     func readState() -> FocusAssertionState {
-        guard let data = try? Data(contentsOf: path) else {
+        readState(at: path)
+    }
+
+    func readState(at url: URL) -> FocusAssertionState {
+        guard let data = try? Data(contentsOf: url) else {
             // No Full Disk Access (or the file doesn't exist yet).
             return .unreadable
         }
@@ -69,5 +73,66 @@ nonisolated final class FocusAssertionsReader: Sendable {
         }
 
         return .off
+    }
+}
+
+/// Skips decoding Assertions.json again while the open file's identity, size, and timestamps remain
+/// unchanged. It is not thread-safe, so confine every call to one serial queue.
+nonisolated final class FocusAssertionStateMemo: @unchecked Sendable {
+    private struct Stamp: Equatable {
+        let device: Int64
+        let inode: UInt64
+        let size: Int64
+        let modificationSeconds: Int
+        let modificationNanoseconds: Int
+        let changeSeconds: Int
+        let changeNanoseconds: Int
+    }
+
+    private var cachedStamp: Stamp?
+    private var cachedState: FocusAssertionState?
+
+    func state(at url: URL, read: (URL) -> FocusAssertionState) -> FocusAssertionState {
+        // Opening the file instead of only calling stat reports an unreadable state when the Full
+        // Disk Access grant is lost, instead of the last decoded state.
+        let descriptor = open(url.path, O_RDONLY)
+        guard descriptor >= 0 else {
+            clear()
+            return read(url)
+        }
+        defer { close(descriptor) }
+
+        var info = stat()
+        guard fstat(descriptor, &info) == 0 else {
+            clear()
+            return read(url)
+        }
+
+        let stamp = Stamp(
+            device: Int64(info.st_dev),
+            inode: UInt64(info.st_ino),
+            size: Int64(info.st_size),
+            modificationSeconds: info.st_mtimespec.tv_sec,
+            modificationNanoseconds: info.st_mtimespec.tv_nsec,
+            changeSeconds: info.st_ctimespec.tv_sec,
+            changeNanoseconds: info.st_ctimespec.tv_nsec
+        )
+        if stamp == cachedStamp, let cachedState {
+            return cachedState
+        }
+
+        let state = read(url)
+        if case .unreadable = state {
+            clear()
+        } else {
+            cachedStamp = stamp
+            cachedState = state
+        }
+        return state
+    }
+
+    private func clear() {
+        cachedStamp = nil
+        cachedState = nil
     }
 }
