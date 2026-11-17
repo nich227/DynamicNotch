@@ -1,99 +1,95 @@
 # Contributing to DynamicNotch
 
-First off, thank you for taking the time to contribute! 🎉
+Thank you for taking the time to contribute.
 
-DynamicNotch is built with the goal of bringing a smooth, native, and highly polished iOS-style Dynamic Island experience to macOS. Contributions from the community help make the app more reliable, feature-rich, and accessible to everyone.
+DynamicNotch aims to bring a smooth, native, and polished iOS-style Dynamic Island experience to macOS. Community contributions make the app more reliable, add features, and improve accessibility for everyone.
 
-Please read through these guidelines to understand how you can help this project grow.
+Use these guidelines when contributing.
 
-## Table of Contents
+## Table of contents
 
-- [Code of Conduct](#code-of-conduct)
-- [How Can I Contribute?](#how-can-i-contribute)
-  - [Reporting Bugs](#reporting-bugs)
-  - [Suggesting Enhancements](#suggesting-enhancements)
-  - [Localizations and Translations](#localizations-and-translations)
-  - [Code Contributions](#code-contributions)
-- [Development Setup](#development-setup)
-- [Project Architecture](#project-architecture)
-- [Coding Guidelines](#coding-guidelines)
+- [Code of conduct](#code-of-conduct)
+- [How can I contribute?](#how-can-i-contribute)
+  - [Reporting bugs](#reporting-bugs)
+  - [Suggesting enhancements](#suggesting-enhancements)
+  - [Localizations and translations](#localizations-and-translations)
+  - [Code contributions](#code-contributions)
+- [Development setup](#development-setup)
+- [Project architecture](#project-architecture)
+- [Coding guidelines](#coding-guidelines)
 - [Testing](#testing)
-- [Pull Request Checklist](#pull-request-checklist)
+- [Pull request checklist](#pull-request-checklist)
 
 ---
 
-## Code of Conduct
+## Code of conduct
 
-By participating in this project, you agree to maintain a respectful, welcoming, and collaborative environment. Please be constructive in your feedback and respectful of other contributors.
+By participating, you agree to keep this project respectful, welcoming, and collaborative. Give constructive feedback and respect other contributors.
 
 ---
 
-## How Can I Contribute?
+## How can I contribute?
 
-### Reporting Bugs
+### Reporting bugs
 
-If you find a bug, please check the [Issues](https://github.com/jackson-storm/DynamicNotch/issues) list first to see if it has already been reported. If not, feel free to open a new issue.
+If you find a bug, check the [Issues](https://github.com/nich227/DynamicNotch/issues) list first. If no one has reported it, open a new issue.
 
-When reporting a bug, please include:
-1. **macOS Version** (e.g., macOS 14.6) and **Mac model** (e.g., MacBook Pro M3 Max).
-2. **App Version** (e.g., latest GitHub release or a custom build).
-3. **Clear steps to reproduce** the issue.
-4. **Expected behavior** vs. **actual behavior**.
-5. **Console logs, screenshots, or screen recordings** showing the bug.
+Include:
+1. macOS version (e.g., macOS 14.6) and Mac model (e.g., MacBook Pro M3 Max).
+2. App version (e.g., the latest GitHub release or a custom build).
+3. Clear steps to reproduce the issue.
+4. Expected and actual behavior.
+5. Console logs, screenshots, or screen recordings showing the bug.
 
-*Note: For security vulnerabilities, please refer to our [Security Policy](SECURITY.md) and email us directly rather than opening a public issue.*
+*Note: For security vulnerabilities, read the [Security Policy](SECURITY.md) and report it privately instead of opening a public issue.*
 
-### Suggesting Enhancements
+### Suggesting enhancements
 
-We are always looking for ways to improve the animations, layouts, and feature support of DynamicNotch! If you have an idea:
-- Explain the behavior you want to see.
-- Provide mockup designs or link to reference materials (like iOS Dynamic Island behaviors).
+DynamicNotch welcomes ideas for better animations, layouts, and feature support. To suggest an enhancement:
+- Explain the behavior you want.
+- Provide mockups or links to reference materials, such as iOS Dynamic Island behavior.
 - Open an issue with the tag `enhancement`.
 
-### Localizations and Translations
+### Localizations and translations
 
-DynamicNotch supports multiple languages (English, Russian, Spanish, Simplified Chinese, etc.). If you want to:
-- Add translations for an existing language.
-- Support a new language.
+This fork ships in English only. The strings are stored in `DynamicNotch/Resources/Localization/Localizable.xcstrings`. To add a language, add its translations to that string catalog and add the language to the known regions of the project.
 
-You can modify or add localizations inside the Xcode project using Swift String Catalogs or target-specific localizations within `DynamicNotch/Resources/Localizable.xcstrings` (if using String Catalogs) or the corresponding translation files.
+### Code contributions
 
-### Code Contributions
-
-If you'd like to fix a bug or add a feature:
-1. Search the open issues or open one to discuss your proposed change.
-2. Fork the repository and create a descriptive branch: `git checkout -b feature/my-new-feature` or `bugfix/fix-some-bug`.
-3. Keep your changes focused. Avoid submitting large PRs that mix unrelated fixes.
+To fix a bug or add a feature:
+1. Search the open issues, or open one to discuss your proposed change.
+2. Fork the repository and create a descriptive branch, such as `git checkout -b feature/my-new-feature` or `bugfix/fix-some-bug`.
+3. Keep your changes focused. Avoid large pull requests that mix unrelated fixes.
 
 ---
 
-## Development Setup
+## Development setup
 
-To build and run DynamicNotch locally, you will need:
-- A Mac running **macOS 14.6** or later.
-- **Xcode 15.0** or later.
+DynamicNotch requires:
+- A Mac running macOS 14.6 or later.
+- Xcode 15.0 or later.
 - Basic knowledge of Swift, SwiftUI, and AppKit.
 
-### Steps to Run:
+### Run the app
 
-1. **Clone the repository:**
+1. Clone the repository:
    ```bash
-   git clone https://github.com/jackson-storm/DynamicNotch.git
+   git clone https://github.com/nich227/DynamicNotch.git
    cd DynamicNotch
    ```
-2. **Open the project in Xcode:**
+2. Open the project in Xcode:
    ```bash
    open DynamicNotch.xcodeproj
    ```
-3. Xcode will automatically resolve the Swift Package Manager (SPM) dependencies (e.g., Lottie).
-4. Select the `DynamicNotch` scheme and your target (My Mac).
-5. Click **Run** (`Cmd + R`) to compile and launch the app.
+3. Xcode resolves the Swift Package Manager (SPM) dependencies, including Lottie.
+4. Select the `DynamicNotch` scheme and My Mac as the target.
+5. Click Run (`Cmd + R`) to compile and start the app.
 
 ---
 
-## Project Architecture
+## Project architecture
 
-DynamicNotch uses a modular, features-based architecture. This separation makes it easy to add, modify, or disable specific notch modules.
+DynamicNotch uses a modular, feature-based architecture. This structure makes each notch module easy to add, change, or disable.
 
 ```
 DynamicNotch/
@@ -109,58 +105,57 @@ DynamicNotch/
 └── Resources/          # Assets, Lottie files, localizations, and application icons
 ```
 
-### Key Concepts:
-- **ViewModels**: Manage the logic, state, and event streams using the Combine framework.
-- **Views**: Built with SwiftUI for modern, declarative layouts.
-- **AppKit Wrappers**: Used to manage the notch overlay window itself, tracking fullscreen workspace shifts, mouse trackpad hover events, and system coordinate conversions.
+### Key concepts
+
+- ViewModels manage logic, state, and event streams with Combine.
+- Views use SwiftUI for declarative layouts.
+- AppKit wrappers manage the notch overlay window. They track full-screen workspace changes, mouse and trackpad hover events, and system coordinate conversions.
 
 ---
 
-## Coding Guidelines
+## Coding guidelines
 
-To keep the codebase maintainable and clean, please adhere to these rules:
+Follow these rules:
 
-1. **Dynamic Island First (Features & UI)**:
-   - New features and UI components must strictly match or closely resemble the native Apple iOS Dynamic Island behaviors, layouts, and physics-based spring animations.
-   - Do not invent non-standard UI elements that break the Apple design language (use proper rounded corners, padding, and San Francisco typography).
-2. **Minimal & Targeted Bug Fixes**:
-   - Fix bugs pinpointed to their cause without altering unrelated business logic, existing view layouts, or user flows.
-3. **Architecture Conformity**:
-   - If writing a new feature, place it in `DynamicNotch/Features/[FeatureName]`.
-   - Follow the MVVM architecture: keep Views declarative and delegate state and event handling to ViewModels.
-4. **Battery & Performance Consciousness**:
-   - DynamicNotch is a background overlay app. Avoid high-frequency polling, tight timer loops, or heavy background computations.
-   - Guard against memory leaks: ensure subscriptions and notification observers use `[weak self]` where appropriate.
-   - Ensure UI updates execute on the `@MainActor`.
-5. **Zero Unnecessary Dependencies**:
-   - Avoid adding external SPM dependencies unless absolutely necessary and agreed upon. Use native macOS, AppKit, and SwiftUI APIs whenever possible.
-6. **Code Style & Swift Guidelines**:
-   - Write clean, self-documenting Swift code following the Swift API Design Guidelines.
+1. Match Dynamic Island behavior and UI.
+   - New features and UI components must strictly match or closely resemble native iOS Dynamic Island behavior, layouts, and spring animations.
+   - Do not add nonstandard UI elements that break Apple's design language. Use proper rounded corners, padding, and San Francisco typography.
+2. Keep bug fixes targeted.
+   - Fix the cause without changing unrelated business logic, existing view layouts, or user flows.
+3. Follow the architecture.
+   - Place each new feature in `DynamicNotch/Features/[FeatureName]`.
+   - Keep views declarative. Delegate state and event handling to ViewModels.
+4. Protect battery life and performance.
+   - DynamicNotch runs as a background overlay. Avoid high-frequency polling, tight timer loops, and heavy background computations.
+   - Prevent memory leaks. Use `[weak self]` for subscriptions and notification observers where appropriate.
+   - Run UI updates on `@MainActor`.
+5. Limit dependencies.
+   - Add external SPM dependencies only when absolutely necessary and agreed upon. Use native macOS, AppKit, and SwiftUI APIs whenever possible.
+6. Follow Swift conventions.
+   - Write clear, self-documenting Swift code that follows the Swift API Design Guidelines.
    - Avoid force unwrapping (`!`).
-   - Use 4 spaces for indentation.
-   - Clean up unused imports, dead code, debug `print()` statements, and commented-out snippets before submitting.
+   - Indent with 4 spaces.
+   - Remove unused imports, dead code, debug `print()` statements, and commented-out code before submitting.
 
 ---
 
 ## Testing
 
-DynamicNotch has a test suite located in the `DynamicNotchTests` folder.
+The test suite is in the `DynamicNotchTests` folder.
 
-- **Running Tests:** Press `Cmd + U` in Xcode to run all unit tests.
-- **Adding Tests:** When adding new features or resolving bugs, please add corresponding tests in `DynamicNotchTests/Features/[FeatureName]` to prevent future regressions.
+- Press `Cmd + U` in Xcode to run all unit tests.
+- Add tests for new features and bug fixes in `DynamicNotchTests/Features/[FeatureName]` to prevent regressions.
 
 ---
 
-## Pull Request Checklist
+## Pull request checklist
 
-Before submitting your pull request, please make sure:
-- [ ] New features/UI strictly adhere to native iOS Dynamic Island design and animations.
-- [ ] Bug fixes do not alter unrelated logic or UI.
-- [ ] No performance regressions, high-frequency polling, or memory leaks.
-- [ ] No unnecessary third-party dependencies are introduced.
-- [ ] The project compiles successfully without errors or new warnings.
+Before submitting your pull request, confirm:
+- [ ] New features and UI strictly follow native iOS Dynamic Island design and animations.
+- [ ] Bug fixes do not change unrelated logic or UI.
+- [ ] The code introduces no performance regressions, high-frequency polling, or memory leaks.
+- [ ] The code introduces no unnecessary third-party dependencies.
+- [ ] The project compiles without errors or new warnings.
 - [ ] All unit tests pass (`Cmd + U`).
-- [ ] Code follows project formatting and Swift conventions (no leftover `print()`, clean commits).
-- [ ] You have included screenshots or screen recordings for UI changes.
-
-Thank you for contributing to DynamicNotch! 🚀
+- [ ] The code follows project formatting and Swift conventions, has no leftover `print()` statements, and uses clean commits.
+- [ ] The pull request includes screenshots or screen recordings for UI changes.
