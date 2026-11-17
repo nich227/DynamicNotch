@@ -1,0 +1,56 @@
+{
+  "fill" : {
+    "solid" : "srgb:0.96078,0.50980,0.12157,1.00000"
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "glass" : false,
+          "image-name-specializations" : [
+            {
+              "value" : "laptop-silver.png"
+            },
+            {
+              "appearance" : "dark",
+              "value" : "laptop-space-gray.png"
+            }
+          ],
+          "name" : "laptop"
+        }
+      ],
+      "shadow" : {
+        "kind" : "none",
+        "opacity" : 0.5
+      },
+      "specular" : false,
+      "translucency" : {
+        "enabled" : false,
+        "value" : 0.5
+      }
+    },
+    {
+      "layers" : [
+        {
+          "glass" : false,
+          "image-name" : "rainbow.png",
+          "name" : "rainbow"
+        }
+      ],
+      "shadow" : {
+        "kind" : "none",
+        "opacity" : 0.5
+      },
+      "specular" : false,
+      "translucency" : {
+        "enabled" : false,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "squares" : [
+      "macOS"
+    ]
+  }
+}
