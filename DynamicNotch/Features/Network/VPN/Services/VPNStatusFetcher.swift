@@ -171,6 +171,20 @@ enum VPNStatusFetcher {
         return fetchVPNConnectedAt(uuid: activeVPN.id)
     }
     
+    private nonisolated static let lastStatusChangeTimeFormatters: [DateFormatter] = [
+        "MM/dd/yyyy HH:mm:ss",
+        "yyyy-MM-dd HH:mm:ss",
+        "dd/MM/yyyy HH:mm:ss",
+        "MM/dd/yy HH:mm:ss",
+        "dd.MM.yyyy HH:mm:ss"
+    ].map { format in
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = .autoupdatingCurrent
+        return formatter
+    }
+
     nonisolated static func parseLastStatusChangeTime(from output: String) -> Date? {
         let lines = output.components(separatedBy: .newlines)
         for line in lines {
@@ -178,19 +192,7 @@ enum VPNStatusFetcher {
                 let parts = line.components(separatedBy: "LastStatusChangeTime :")
                 if parts.count > 1 {
                     let dateStr = parts[1].trimmingCharacters(in: .whitespacesAndNewlines)
-                    let formats = [
-                        "MM/dd/yyyy HH:mm:ss",
-                        "yyyy-MM-dd HH:mm:ss",
-                        "dd/MM/yyyy HH:mm:ss",
-                        "MM/dd/yy HH:mm:ss",
-                        "dd.MM.yyyy HH:mm:ss"
-                    ]
-                    let formatter = DateFormatter()
-                    formatter.locale = Locale(identifier: "en_US_POSIX")
-                    formatter.timeZone = TimeZone.current
-                    
-                    for format in formats {
-                        formatter.dateFormat = format
+                    for formatter in lastStatusChangeTimeFormatters {
                         if let date = formatter.date(from: dateStr) {
                             return date
                         }

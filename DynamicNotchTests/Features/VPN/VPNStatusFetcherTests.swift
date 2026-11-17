@@ -40,6 +40,38 @@ Extended Status <dictionary> {
         XCTAssertEqual(parsedComponents.second, 14)
     }
     
+    func testParseLastStatusChangeTimeMatchesOneFormatterTriedInOrder() {
+        let formats = [
+            "MM/dd/yyyy HH:mm:ss",
+            "yyyy-MM-dd HH:mm:ss",
+            "dd/MM/yyyy HH:mm:ss",
+            "MM/dd/yy HH:mm:ss",
+            "dd.MM.yyyy HH:mm:ss"
+        ]
+        func parsedByOneFormatter(_ text: String) -> Date? {
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            formatter.timeZone = TimeZone.current
+            for format in formats {
+                formatter.dateFormat = format
+                if let date = formatter.date(from: text) {
+                    return date
+                }
+            }
+            return nil
+        }
+
+        let samples = [
+            "06/19/2026 23:30:14", "2026-06-19 23:30:14", "19/06/2026 23:30:14",
+            "06/19/26 23:30:14", "19.06.2026 23:30:14", "05/06/2026 08:00:00", "not a date"
+        ]
+        for text in samples {
+            let parsed = VPNStatusFetcher.parseLastStatusChangeTime(from: "  LastStatusChangeTime : \(text)\n  Status : 2")
+            XCTAssertEqual(parsed, parsedByOneFormatter(text), text)
+        }
+        XCTAssertEqual(samples.compactMap(parsedByOneFormatter).count, samples.count - 1)
+    }
+
     func testParseLastStatusChangeTimeInvalid() {
         let invalidOutput = "LastStatusChangeTime : invalid-date-string"
         XCTAssertNil(VPNStatusFetcher.parseLastStatusChangeTime(from: invalidOutput))
