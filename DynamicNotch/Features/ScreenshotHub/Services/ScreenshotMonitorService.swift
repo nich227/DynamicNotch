@@ -15,6 +15,7 @@ final class ScreenshotMonitorService {
     private(set) var decodingPaths = Set<String>()
     private var failedDecodePaths = Set<String>()
     private let stagingDirectoryOverride: URL?
+    private var settledDirectoryModificationDates: [String: Date] = [:]
     private var isMonitoring = false
     private let fileManager = FileManager.default
     
@@ -125,17 +126,51 @@ final class ScreenshotMonitorService {
     }
     
     func scanNow() {
-        scanForNewScreenshots()
-        scanTargetDirectoryForRecordings()
+        scanForNewScreenshots(force: true)
+        scanTargetDirectoryForRecordings(force: true)
     }
 
-    func scanForNewScreenshots() {
+    private func directoryModificationDate(of url: URL) -> Date? {
+        (try? fileManager.attributesOfItem(atPath: url.path))?[.modificationDate] as? Date
+    }
+
+    /// A directory's entries are unchanged if all were known or skipped by name after its last scan
+    /// and its modification date remains unchanged. Thus, rescanning it would do nothing.
+    private func isDirectorySettled(_ url: URL, modificationDate: Date?) -> Bool {
+        guard let modificationDate else { return false }
+        return settledDirectoryModificationDates[url.path] == modificationDate
+    }
+
+    private func recordScanResult(
+        for url: URL,
+        modificationDate: Date?,
+        readTime: Date,
+        listedURLs: [URL],
+        isSkippedByName: (URL) -> Bool = { _ in false }
+    ) {
+        // Coarse-timestamp volumes (HFS+, FAT32, SMB) can add an entry without changing the
+        // modification date. Only settle if the modification date was already older than the
+        // volume's timestamp granularity when read.
+        if let modificationDate,
+           readTime.timeIntervalSince(modificationDate) > 2,
+           listedURLs.allSatisfy({ knownFilePaths.contains($0.path) || isSkippedByName($0) }) {
+            settledDirectoryModificationDates[url.path] = modificationDate
+        } else {
+            settledDirectoryModificationDates[url.path] = nil
+        }
+    }
+
+    func scanForNewScreenshots(force: Bool = false) {
         let dir = rawStagingDirectoryURL()
+        let dirReadTime = Date()
+        let dirModificationDate = directoryModificationDate(of: dir)
+        guard force || !isDirectorySettled(dir, modificationDate: dirModificationDate) else { return }
         guard let urls = try? fileManager.contentsOfDirectory(
             at: dir,
             includingPropertiesForKeys: [.contentModificationDateKey, .isRegularFileKey],
             options: [.skipsHiddenFiles]
         ) else { return }
+        defer { recordScanResult(for: dir, modificationDate: dirModificationDate, readTime: dirReadTime, listedURLs: urls) }
         
         let now = Date()
         var imageCandidates: [URL] = []
@@ -213,14 +248,23 @@ final class ScreenshotMonitorService {
         }
     }
 
-    private func scanTargetDirectoryForRecordings() {
+    private func scanTargetDirectoryForRecordings(force: Bool = false) {
         let targetDir = computeScreenRecordingTargetDirectoryURL()
         guard targetDir != rawStagingDirectoryURL() else { return }
+        let dirReadTime = Date()
+        let dirModificationDate = directoryModificationDate(of: targetDir)
+        guard force || !isDirectorySettled(targetDir, modificationDate: dirModificationDate) else { return }
         guard let urls = try? fileManager.contentsOfDirectory(
             at: targetDir,
             includingPropertiesForKeys: [.contentModificationDateKey, .isRegularFileKey],
             options: [.skipsHiddenFiles]
         ) else { return }
+        defer {
+            recordScanResult(for: targetDir, modificationDate: dirModificationDate, readTime: dirReadTime, listedURLs: urls) { url in
+                let lower = url.lastPathComponent.lowercased()
+                return !(lower.hasSuffix(".mov") || lower.hasSuffix(".mp4") || lower.contains("screen recording") || lower.contains("запись экрана"))
+            }
+        }
 
         let now = Date()
         for url in urls {
