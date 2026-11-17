@@ -124,10 +124,15 @@ final class CalendarViewModel: ObservableObject {
             .store(in: &cancellables)
         
         // Listen for settings changes
+        lastCalendarSettingsSnapshot = calendarSettingsSnapshot()
         NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.fetchUpcomingEvents()
+                guard let self else { return }
+                let snapshot = self.calendarSettingsSnapshot()
+                guard snapshot != self.lastCalendarSettingsSnapshot else { return }
+                self.lastCalendarSettingsSnapshot = snapshot
+                self.fetchUpcomingEvents()
             }
             .store(in: &cancellables)
             
@@ -138,6 +143,29 @@ final class CalendarViewModel: ObservableObject {
             }
     }
     
+    // didChangeNotification fires for every key in the app, but only calendar keys trigger a
+    // refetch.
+    private static let calendarSettingsKeys = [
+        GeneralSettingsStorage.Keys.calendarLiveActivity,
+        GeneralSettingsStorage.Keys.calendarHideWhenFocused,
+        GeneralSettingsStorage.Keys.calendarShowAllDay,
+        GeneralSettingsStorage.Keys.calendarDaysToShow,
+        GeneralSettingsStorage.Keys.calendarNoticeMinutes,
+        GeneralSettingsStorage.Keys.calendarIncludedCalendarIDs,
+        GeneralSettingsStorage.Keys.calendarTimeDisplayFormat,
+        GeneralSettingsStorage.Keys.calendarOngoingEventHideMinutes,
+        GeneralSettingsStorage.Keys.calendarPrivacyMode,
+        GeneralSettingsStorage.Keys.calendarSoundAlert,
+        GeneralSettingsStorage.Keys.calendarShowCreatedEventsOnly
+    ]
+
+    private var lastCalendarSettingsSnapshot: NSArray?
+
+    private func calendarSettingsSnapshot() -> NSArray {
+        let defaults = UserDefaults.standard
+        return Self.calendarSettingsKeys.map { defaults.object(forKey: $0) ?? NSNull() } as NSArray
+    }
+
     var formattedNextEventTime: String {
         guard let event = nextEvent else { return "" }
         if event.isAllDay {
