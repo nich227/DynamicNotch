@@ -50,6 +50,7 @@ final class MediaRemoteNowPlayingService: NowPlayingMonitoring, NowPlayingDetail
     private var errorPipe: Pipe?
     private var outputBuffer = NewlineDelimitedBuffer()
     private var lastSnapshot: NowPlayingSnapshot?
+    private var artworkDecoder = Base64ArtworkDecodeMemo()
     private var favoriteRefreshTask: Task<Void, Never>?
     private var favoriteRefreshKey: String?
     private var applicationPlaybackRefreshTask: Task<Void, Never>?
@@ -107,6 +108,7 @@ final class MediaRemoteNowPlayingService: NowPlayingMonitoring, NowPlayingDetail
 
         callbackQueue.async { [weak self] in
             self?.lastSnapshot = nil
+            self?.artworkDecoder = Base64ArtworkDecodeMemo()
         }
     }
 
@@ -535,10 +537,27 @@ private extension MediaRemoteNowPlayingService {
     private func decodeArtworkData(_ base64String: String?) -> Data? {
         guard let base64String else { return nil }
 
-        return Data(
+        return artworkDecoder.decode(base64String)
+    }
+}
+
+/// Reuses the last decode when the adapter resends the same base64 artwork string.
+nonisolated struct Base64ArtworkDecodeMemo {
+    private var lastInput: String?
+    private var lastOutput: Data?
+
+    mutating func decode(_ base64String: String) -> Data? {
+        if base64String == lastInput {
+            return lastOutput
+        }
+
+        let data = Data(
             base64Encoded: base64String,
             options: .ignoreUnknownCharacters
         )
+        lastInput = base64String
+        lastOutput = data
+        return data
     }
 }
 
