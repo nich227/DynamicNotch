@@ -176,9 +176,7 @@ final class CalendarViewModel: ObservableObject {
         let formatRaw = UserDefaults.standard.string(forKey: GeneralSettingsStorage.Keys.calendarTimeDisplayFormat) ?? CalendarTimeDisplayFormat.exact.rawValue
         let format = CalendarTimeDisplayFormat(rawValue: formatRaw) ?? .exact
         
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        let exactTime = formatter.string(from: event.startDate)
+        let exactTime = ShortTimeFormatterCache.shared.string(from: event.startDate)
         
         let minutesUntilStart = max(0, Int(ceil(event.startDate.timeIntervalSince(now) / 60)))
         let relativeTime: String
@@ -265,5 +263,42 @@ final class CalendarViewModel: ObservableObject {
         if self.nextEvent?.eventIdentifier == event.eventIdentifier {
             self.nextEvent = self.events.first
         }
+    }
+}
+
+final class ShortTimeFormatterCache {
+    static let shared = ShortTimeFormatterCache()
+
+    private let currentLocale: () -> Locale
+    private let currentTimeZone: () -> TimeZone
+    private var formatter: DateFormatter?
+    private var formatterLocale: Locale?
+    private var formatterTimeZone: TimeZone?
+
+    init(
+        currentLocale: @escaping () -> Locale = { Locale.current },
+        currentTimeZone: @escaping () -> TimeZone = { TimeZone.current }
+    ) {
+        self.currentLocale = currentLocale
+        self.currentTimeZone = currentTimeZone
+    }
+
+    func string(from date: Date) -> String {
+        // Locale equality includes the user's format preferences (hour cycle and custom time
+        // formats), so a new formatter would produce the same result.
+        let locale = currentLocale()
+        let timeZone = currentTimeZone()
+        if let formatter, formatterLocale == locale, formatterTimeZone == timeZone {
+            return formatter.string(from: date)
+        }
+
+        let formatter = DateFormatter()
+        formatter.locale = locale
+        formatter.timeZone = timeZone
+        formatter.timeStyle = .short
+        self.formatter = formatter
+        formatterLocale = locale
+        formatterTimeZone = timeZone
+        return formatter.string(from: date)
     }
 }

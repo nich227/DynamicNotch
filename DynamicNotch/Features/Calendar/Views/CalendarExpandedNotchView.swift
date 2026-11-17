@@ -124,9 +124,7 @@ struct CalendarExpandedNotchView: View {
     }
     
     private func timeString(from date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        return formatter.string(from: date)
+        ShortTimeFormatterCache.shared.string(from: date)
     }
     
     private func isVideoCall(url: URL) -> Bool {
