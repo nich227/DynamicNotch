@@ -586,6 +586,15 @@ private extension FolderFileDownloadMonitor {
     }
 
     private func isTemporaryDownloadFile(named fileName: String) -> Bool {
+        DownloadDirectoryEventFilter.isTemporaryDownloadFile(named: fileName)
+    }
+}
+
+/// Decides which FSEvents paths can affect a scan. The scan lists only direct children of the
+/// monitored directories, plus the contents of temporary download bundles, so deeper writes are
+/// noise.
+nonisolated enum DownloadDirectoryEventFilter {
+    static func isTemporaryDownloadFile(named fileName: String) -> Bool {
         let lowercasedName = fileName.lowercased()
         return [
             ".download",
@@ -595,15 +604,64 @@ private extension FolderFileDownloadMonitor {
             ".tmp"
         ].contains { lowercasedName.hasSuffix($0) }
     }
+
+    static func rootPaths(for urls: [URL]) -> [String] {
+        var seenPaths = Set<String>()
+        return urls
+            .flatMap { [$0.standardizedFileURL.path, $0.resolvingSymlinksInPath().path, realPath(of: $0)] }
+            .compactMap { $0 }
+            .filter { seenPaths.insert($0).inserted }
+    }
+
+    // FSEvents reports real paths, and resolvingSymlinksInPath drops a leading /private.
+    private static func realPath(of url: URL) -> String? {
+        guard let resolved = realpath(url.path, nil) else { return nil }
+        defer { free(resolved) }
+        return String(cString: resolved)
+    }
+
+    static func isRelevant(path: String, flags: FSEventStreamEventFlags, rootPaths: [String]) -> Bool {
+        let rescanFlags = FSEventStreamEventFlags(
+            kFSEventStreamEventFlagMustScanSubDirs |
+            kFSEventStreamEventFlagUserDropped |
+            kFSEventStreamEventFlagKernelDropped |
+            kFSEventStreamEventFlagRootChanged |
+            kFSEventStreamEventFlagMount |
+            kFSEventStreamEventFlagUnmount
+        )
+        if flags & rescanFlags != 0 {
+            return true
+        }
+
+        var matchedRoot = false
+        for rootPath in rootPaths {
+            let prefix = rootPath.hasSuffix("/") ? rootPath : rootPath + "/"
+            if path == rootPath || path == prefix {
+                return true
+            }
+            guard path.hasPrefix(prefix) else { continue }
+
+            matchedRoot = true
+            let components = path.dropFirst(prefix.count).split(separator: "/")
+            if components.count <= 1 || isTemporaryDownloadFile(named: String(components[0])) {
+                return true
+            }
+        }
+
+        // An unrecognized path (for example, a symlinked root) triggers a full scan.
+        return !matchedRoot
+    }
 }
 
 private nonisolated final class DirectoryWatcher {
     private var stream: FSEventStreamRef?
     private let onChange: () -> Void
+    private let rootPaths: [String]
 
     init?(urls: [URL], queue: DispatchQueue, onChange: @escaping () -> Void) {
         guard !urls.isEmpty else { return nil }
         self.onChange = onChange
+        self.rootPaths = DownloadDirectoryEventFilter.rootPaths(for: urls)
 
         let paths = urls.map { $0.path } as CFArray
         var context = FSEventStreamContext(
@@ -614,10 +672,21 @@ private nonisolated final class DirectoryWatcher {
             copyDescription: nil
         )
 
-        let callback: FSEventStreamCallback = { _, clientCallBackInfo, _, _, _, _ in
+        let callback: FSEventStreamCallback = { _, clientCallBackInfo, numEvents, eventPaths, eventFlags, _ in
             guard let clientCallBackInfo else { return }
             let watcher = Unmanaged<DirectoryWatcher>.fromOpaque(clientCallBackInfo).takeUnretainedValue()
-            watcher.onChange()
+            let paths = eventPaths.assumingMemoryBound(to: UnsafePointer<CChar>.self)
+            for index in 0..<numEvents {
+                let path = String(cString: paths[index])
+                if DownloadDirectoryEventFilter.isRelevant(
+                    path: path,
+                    flags: eventFlags[index],
+                    rootPaths: watcher.rootPaths
+                ) {
+                    watcher.onChange()
+                    return
+                }
+            }
         }
 
         let flags = UInt32(kFSEventStreamCreateFlagFileEvents | kFSEventStreamCreateFlagNoDefer)
