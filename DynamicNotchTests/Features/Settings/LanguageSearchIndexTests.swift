@@ -4,11 +4,7 @@ import XCTest
 @MainActor
 final class LanguageSearchIndexTests: XCTestCase {
     func testLocalizedTitleIsReusedUntilAppLanguageChanges() {
-        let suiteName = "LanguageSearchIndexTests.\(UUID().uuidString)"
-        let defaults = UserDefaults(suiteName: suiteName)!
-        defer { defaults.removePersistentDomain(forName: suiteName) }
-        let settings = ApplicationSettingsStore(defaults: defaults)
-        settings.appLanguage = .english
+        var appLanguage = DynamicNotchLanguage.english
 
         var lookups = 0
         let index = LanguageSearchIndex(localizedTitle: { language, appLanguage in
@@ -16,13 +12,13 @@ final class LanguageSearchIndexTests: XCTestCase {
             return appLanguage == .english ? "Title-\(language.rawValue)" : "Titel-\(language.rawValue)"
         })
 
-        XCTAssertTrue(index.matches(.german, query: "title-de", appLanguage: settings.appLanguage))
-        XCTAssertTrue(index.matches(.german, query: "title-de", appLanguage: settings.appLanguage))
+        XCTAssertTrue(index.matches(.german, query: "title-de", appLanguage: appLanguage))
+        XCTAssertTrue(index.matches(.german, query: "title-de", appLanguage: appLanguage))
         XCTAssertEqual(lookups, 1)
 
-        settings.appLanguage = .german
-        XCTAssertFalse(index.matches(.german, query: "title-de", appLanguage: settings.appLanguage))
-        XCTAssertTrue(index.matches(.german, query: "titel-de", appLanguage: settings.appLanguage))
+        appLanguage = .german
+        XCTAssertFalse(index.matches(.german, query: "title-de", appLanguage: appLanguage))
+        XCTAssertTrue(index.matches(.german, query: "titel-de", appLanguage: appLanguage))
         XCTAssertEqual(lookups, 2)
     }
 

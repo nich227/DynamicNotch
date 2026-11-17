@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MenuBarMenu: View {
     @ObservedObject private var updater = SparkleUpdater.shared
-    @AppStorage(GeneralSettingsStorage.Keys.appLanguage) private var appLanguageRaw: String = DynamicNotchLanguage.system.rawValue
+    @AppStorage(GeneralSettingsStorage.Keys.appLanguage) private var appLanguageRaw: String = DynamicNotchLanguage.english.rawValue
 
     private var locale: Locale {
         DynamicNotchLanguage.resolved(appLanguageRaw).locale

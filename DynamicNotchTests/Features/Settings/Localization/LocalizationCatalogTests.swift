@@ -82,44 +82,32 @@ final class LocalizationCatalogTests: XCTestCase {
         }
     }
 
-    func testResolvedFallsBackToSystemForUnknownValues() {
-        XCTAssertEqual(DynamicNotchLanguage.resolved(nil), .system)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("klingon"), .system)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("tr"), .turkish)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("de"), .german)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("fr"), .french)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("pt"), .portuguese)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("ja"), .japanese)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("ko"), .korean)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("it"), .italian)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("pl"), .polish)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("vi"), .vietnamese)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("id"), .indonesian)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("nl"), .dutch)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("zh-Hant"), .traditionalChinese)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("uk"), .ukrainian)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("sv"), .swedish)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("cs"), .czech)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("ar"), .arabic)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("hi"), .hindi)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("th"), .thai)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("ro"), .romanian)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("hu"), .hungarian)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("el"), .greek)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("da"), .danish)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("fi"), .finnish)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("nb"), .norwegian)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("ms"), .malay)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("he"), .hebrew)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("bg"), .bulgarian)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("ca"), .catalan)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("sk"), .slovak)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("hr"), .croatian)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("sr"), .serbian)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("fil"), .filipino)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("kk"), .kazakh)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("fa"), .persian)
-        XCTAssertEqual(DynamicNotchLanguage.resolved("bn"), .bengali)
+    func testEveryStoredValueResolvesToEnglish() {
+        XCTAssertEqual(DynamicNotchLanguage.resolved(nil), .english)
+        XCTAssertEqual(DynamicNotchLanguage.resolved("klingon"), .english)
+        XCTAssertEqual(DynamicNotchLanguage.resolved("system"), .english)
+        XCTAssertEqual(DynamicNotchLanguage.resolved("ru"), .english)
+        XCTAssertEqual(DynamicNotchLanguage.resolved("en"), .english)
+    }
+
+    func testEnglishIsTheOnlyLanguageOffered() {
+        XCTAssertEqual(DynamicNotchLanguage.allCases, [.english])
+        XCTAssertEqual(DynamicNotchLanguage.notchLanguages, [.english])
+        XCTAssertEqual(Bundle.main.localizations.filter { $0 != "Base" }, ["en"])
+    }
+
+    @MainActor
+    func testALanguageSavedByAnOlderBuildReadsAsEnglish() {
+        let suiteName = "LocalizationCatalogTests.\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: suiteName)!
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+        defaults.set("ru", forKey: GeneralSettingsStorage.Keys.appLanguage)
+        defaults.set("system", forKey: GeneralSettingsStorage.Keys.notchLanguage)
+
+        let settings = ApplicationSettingsStore(defaults: defaults)
+
+        XCTAssertEqual(settings.appLanguage, .english)
+        XCTAssertEqual(settings.notchLanguage, .english)
     }
 }
 

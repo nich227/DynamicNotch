@@ -101,10 +101,10 @@ final class ApplicationSettingsStore: SettingsStoreBase, NotchSettingsProviding 
     @StoredDefault(key: GeneralSettingsStorage.Keys.displayAutoSwitchEnabled, defaultValue: true)
     var isDisplayAutoSwitchEnabled: Bool
 
-    @StoredDefault(key: GeneralSettingsStorage.Keys.appLanguage, defaultValue: .system)
+    @StoredDefault(key: GeneralSettingsStorage.Keys.appLanguage, defaultValue: .english, transform: { _ in .english })
     var appLanguage: DynamicNotchLanguage
 
-    @StoredDefault(key: GeneralSettingsStorage.Keys.notchLanguage, defaultValue: .system)
+    @StoredDefault(key: GeneralSettingsStorage.Keys.notchLanguage, defaultValue: .english, transform: { _ in .english })
     var notchLanguage: DynamicNotchLanguage
 
     @StoredDefault(key: GeneralSettingsStorage.Keys.hideNotchInFullscreenEnabled, defaultValue: true)

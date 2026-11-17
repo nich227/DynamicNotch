@@ -21,8 +21,7 @@ final class SettingsLocalizationMemoTests: XCTestCase {
         XCTAssertEqual(first, second)
         XCTAssertEqual(lookups, 1)
 
-        settings.appLanguage = .german
-        let third = memo.string("settings.search.prompt", fallback: nil, locale: settings.appLanguage.locale)
+        let third = memo.string("settings.search.prompt", fallback: nil, locale: DynamicNotchLanguage.german.locale)
         XCTAssertEqual(lookups, 2)
         XCTAssertEqual(third, DynamicNotchLanguage.german.locale.dn("settings.search.prompt"))
     }

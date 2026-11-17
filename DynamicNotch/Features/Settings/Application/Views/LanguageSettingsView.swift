@@ -53,7 +53,7 @@ struct LanguageSettingsView: View {
     
     private var content: some View {
         SettingsPageScrollView {
-            systemLanguageCard
+            targetPickerCard
             
             switch selectedTarget {
             case .settings:
@@ -64,9 +64,10 @@ struct LanguageSettingsView: View {
         }
     }
     
-    private var systemLanguageCard: some View {
-        SettingsCard {
-            if isEmbedded {
+    @ViewBuilder
+    private var targetPickerCard: some View {
+        if isEmbedded {
+            SettingsCard {
                 Picker("", selection: $selectedTarget.animation(.easeInOut(duration: 0.15))) {
                     ForEach(LanguageTarget.allCases) { target in
                         Text(target.titleKey).tag(target)
@@ -74,62 +75,10 @@ struct LanguageSettingsView: View {
                 }
                 .pickerStyle(.segmented)
                 .labelsHidden()
-                
-                Divider()
-                    .opacity(0.6)
             }
-            
-            SettingsToggleRow(
-                title: "settings.language.option.system",
-                description: currentSystemDescription,
-                systemImage: "globe",
-                color: .blue,
-                isOn: systemToggleBinding,
-                accessibilityIdentifier: "settings.language.systemToggle"
-            )
         }
     }
-    
-    private var currentSystemDescription: LocalizedStringKey {
-        switch selectedTarget {
-        case .settings:
-            return "settings.language.header.desc"
-        case .notch:
-            return "settings.language.notch.desc"
-        }
-    }
-    
-    private var systemToggleBinding: Binding<Bool> {
-        Binding(
-            get: {
-                switch selectedTarget {
-                case .settings:
-                    return applicationSettings.appLanguage == .system
-                case .notch:
-                    return applicationSettings.notchLanguage == .system
-                }
-            },
-            set: { isSystem in
-                withAnimation(.easeInOut(duration: 0.15)) {
-                    switch selectedTarget {
-                    case .settings:
-                        if isSystem {
-                            applicationSettings.appLanguage = .system
-                        } else if applicationSettings.appLanguage == .system {
-                            applicationSettings.appLanguage = .english
-                        }
-                    case .notch:
-                        if isSystem {
-                            applicationSettings.notchLanguage = .system
-                        } else if applicationSettings.notchLanguage == .system {
-                            applicationSettings.notchLanguage = .english
-                        }
-                    }
-                }
-            }
-        )
-    }
-    
+
     private var settingsLanguageListCard: some View {
         SettingsCard(spacing: 0, padding: 0) {
             SettingsSearchableListView(

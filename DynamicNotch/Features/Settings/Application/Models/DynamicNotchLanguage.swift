@@ -62,12 +62,19 @@ enum DynamicNotchLanguage: String, CaseIterable, Identifiable {
 
     case bengali = "bn"
 
+    /// English is the only language this build ships, so it is the only one a setting can hold or offer.
+    static var allCases: [DynamicNotchLanguage] { [.english] }
+
     var id: String { rawValue }
 
     var locale: Locale {
         switch self {
         case .system:
             return .autoupdatingCurrent
+        case .english:
+            // An English system locale keeps the user's region formats for dates and numbers.
+            let current = Locale.autoupdatingCurrent
+            return current.language.languageCode?.identifier == "en" ? current : Locale(identifier: "en")
         default:
             return Locale(identifier: rawValue)
         }
@@ -577,22 +584,12 @@ enum DynamicNotchLanguage: String, CaseIterable, Identifiable {
         }
     }
 
+    /// Every stored value resolves to English, including one saved by a build that had other languages.
     static func resolved(_ rawValue: String?) -> DynamicNotchLanguage {
-        guard let rawValue, let language = DynamicNotchLanguage(rawValue: rawValue) else {
-            return .system
-        }
-
-        return language
+        .english
     }
 
-    static let notchLanguages: [DynamicNotchLanguage] = [
-        .english,
-        .russian,
-        .german,
-        .spanish,
-        .french,
-        .simplifiedChinese
-    ]
+    static let notchLanguages: [DynamicNotchLanguage] = [.english]
 
     var effectiveNotchLanguage: DynamicNotchLanguage {
         switch self {
