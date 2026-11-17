@@ -11,6 +11,7 @@ struct NotchSurfaceContainerView: View {
             }
             .overlay(alignment: .top) {
                 if notchViewModel.isDynamicIsland,
+                   notchViewModel.displayedContent?.stackID != NotchContentRegistry.Onboarding.stackID,
                    notchViewModel.notchModel.baseWidth > 0,
                    notchViewModel.notchModel.baseHeight > 0 {
                     DynamicIslandShape(cornerRadius: notchViewModel.notchModel.baseHeight * 0.5)

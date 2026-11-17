@@ -12,7 +12,7 @@ struct OnboardingNotchFirstStepView: View {
     
     var body: some View {
         ZStack {
-            AnimateImage(name: "welcome")
+            AnimateImage(name: "hello", tintsGradientsWithAccentColor: true)
                 .frame(width: 180, height: 60)
                 .id(imageAppear)
         }

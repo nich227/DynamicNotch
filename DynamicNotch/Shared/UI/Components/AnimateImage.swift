@@ -13,13 +13,17 @@ struct AnimateImage: NSViewRepresentable {
     let name: String
     var loopMode: LottieLoopMode = .autoReverse
     var backgroundBehavior: LottieBackgroundBehavior = .pauseAndRestore
+    var tintsGradientsWithAccentColor: Bool = false
     
     func makeNSView(context: Context) -> NSView {
         let container = NSView()
         container.wantsLayer = true
         container.layer?.backgroundColor = NSColor.clear.cgColor
         
-        let animationView = LottieAnimationView(name: name)
+        let tinted = tintsGradientsWithAccentColor
+            ? AccentGradient.animation(named: name, accent: .controlAccentColor)
+            : nil
+        let animationView = tinted.map { LottieAnimationView(animation: $0) } ?? LottieAnimationView(name: name)
         animationView.translatesAutoresizingMaskIntoConstraints = false
         animationView.layer?.contentsGravity = .resizeAspect
         animationView.contentMode = .scaleAspectFit
