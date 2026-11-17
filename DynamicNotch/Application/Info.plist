@@ -11,7 +11,7 @@
 	<key>SUFeedURL</key>
 	<string>https://raw.githubusercontent.com/nich227/DynamicNotch/gh-pages/updates.xml.rss</string>
 	<key>SUPublicEDKey</key>
-	<string>tI9ImD75tFgmJQlPjauIIM3qvvbocqeTOT6E2ZpIQA0=</string>
+	<string>J738+7c1bku8w2gE0vCgGBqh6ZVCVAC9oPlkh6s6QBU=</string>
 	<key>SUScheduledCheckInterval</key>
 	<integer>600</integer>
 </dict>

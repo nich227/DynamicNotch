@@ -65,7 +65,7 @@ final class ScreenshotMonitorService {
             return stagingDirectoryOverride
         }
         let caches = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first ?? fileManager.temporaryDirectory
-        return caches.appendingPathComponent("com.Jackson.DynamicNotch/RawScreenshots")
+        return caches.appendingPathComponent("com.kevster.DynamicNotch/RawScreenshots")
     }
     
     private func computeUserTargetDirectoryURL() -> URL {
@@ -78,7 +78,7 @@ final class ScreenshotMonitorService {
             return desktop
         }
         let expanded = (original as NSString).expandingTildeInPath
-        if expanded.contains("com.Jackson.DynamicNotch") || expanded.contains("RawScreenshots") {
+        if expanded.contains("com.kevster.DynamicNotch") || expanded.contains("RawScreenshots") {
             return desktop
         }
         return URL(fileURLWithPath: expanded)
