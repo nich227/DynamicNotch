@@ -79,9 +79,6 @@ struct NowPlayingExpandedNotchView: View {
                 displayedElapsedTime: displayedElapsedTime,
                 duration: snapshot.duration,
                 isInteractive: snapshot.duration > 0,
-                tintGradient: nil,
-                primaryColor: .white.opacity(0.4),
-                secondaryColor: .white.opacity(0.4),
                 onScrubChanged: { newProgress in
                     scrubProgress = newProgress
                 },
