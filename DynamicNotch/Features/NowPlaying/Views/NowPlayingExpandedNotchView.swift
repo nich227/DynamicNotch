@@ -48,7 +48,7 @@ struct NowPlayingExpandedNotchView: View {
 
             controlsSection(snapshot: snapshot, appearance: appearance)
         }
-        .padding(.top, isNotchlessScreen ? 0 : 20)
+        .padding(.top, isNotchlessScreen ? 0 : 15)
         .padding(.horizontal, isNotchlessScreen ? 25 : 55)
         .onAppear {
             nowPlayingViewModel.setDetailedPresentationActive(
@@ -65,14 +65,10 @@ struct NowPlayingExpandedNotchView: View {
     }
 
     private func progressBar(snapshot: NowPlayingSnapshot, at date: Date) -> some View {
-        let elapsedTime = nowPlayingViewModel.snapshot != nil ?
-        nowPlayingViewModel.elapsedTime(at: date) :
-        snapshot.elapsedTime
+        let elapsedTime = nowPlayingViewModel.snapshot != nil ? nowPlayingViewModel.elapsedTime(at: date) : snapshot.elapsedTime
         let progress = progressValue(elapsedTime: elapsedTime, duration: snapshot.duration)
         let displayedProgress = min(max(scrubProgress ?? progress, 0), 1)
-        let displayedElapsedTime = snapshot.duration > 0 ?
-        TimeInterval(displayedProgress) * snapshot.duration :
-        elapsedTime
+        let displayedElapsedTime = snapshot.duration > 0 ? TimeInterval(displayedProgress) * snapshot.duration : elapsedTime
 
         return PlayerProgressBar(
                 progress: displayedProgress,
@@ -97,8 +93,8 @@ struct NowPlayingExpandedNotchView: View {
             }) {
                 ArtworkView(
                     nowPlayingViewModel: nowPlayingViewModel,
-                    width: isNotchlessScreen ? 55 : 58,
-                    height: isNotchlessScreen ? 55 : 58,
+                    width: 55,
+                    height: 55,
                     cornerRadius: 10,
                     usesFlipAnimation: true
                 )
