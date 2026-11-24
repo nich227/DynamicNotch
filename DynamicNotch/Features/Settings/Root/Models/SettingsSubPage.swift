@@ -13,7 +13,6 @@ enum SettingsSubPage: Hashable, Identifiable {
     #endif
     case activityPriorities
     case notchDisplay
-    case gestures
     case timer
     case externalDrives
     
@@ -32,7 +31,6 @@ enum SettingsSubPage: Hashable, Identifiable {
         #endif
         case .activityPriorities: return "settings.notch.priorities.title"
         case .notchDisplay: return "settings.notch.display.title"
-        case .gestures: return "settings.notch.gestures.title"
         case .timer: return "settings.section.timer.title"
         case .externalDrives: return "settings.notifications.externalDrives.title"
         }
@@ -52,7 +50,6 @@ enum SettingsSubPage: Hashable, Identifiable {
         #endif
         case .activityPriorities: return "Activity priorities"
         case .notchDisplay: return "Display"
-        case .gestures: return "Gestures"
         case .timer: return "Timer"
         case .externalDrives: return "External Drives"
         }
@@ -72,7 +69,6 @@ enum SettingsSubPage: Hashable, Identifiable {
         #endif
         case .activityPriorities: return "settings.notch.priorities.subtitle"
         case .notchDisplay: return "settings.notch.display.subtitle"
-        case .gestures: return "settings.notch.gestures.subtitle"
         case .timer: return "settings.section.timer.subtitle"
         case .externalDrives: return "settings.notifications.externalDrives.subtitle"
         }
@@ -92,7 +88,6 @@ enum SettingsSubPage: Hashable, Identifiable {
         #endif
         case .activityPriorities: return "Configure priority level for each activity."
         case .notchDisplay: return "Configure where and how the notch is displayed."
-        case .gestures: return "Configure click, hover, and scroll gestures."
         case .timer: return "Clock timer live activity and stroke appearance."
         case .externalDrives: return "Notifications for connected external disks and flash drives."
         }
@@ -100,7 +95,7 @@ enum SettingsSubPage: Hashable, Identifiable {
     
     var canReset: Bool {
         switch self {
-        case .appearance, .system, .notch, .language, .activityPriorities, .notchDisplay, .gestures, .timer, .externalDrives:
+        case .appearance, .system, .notch, .language, .activityPriorities, .notchDisplay, .timer, .externalDrives:
             return true
         default:
             return false
