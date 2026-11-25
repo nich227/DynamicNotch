@@ -73,6 +73,8 @@ open DynamicNotch.xcodeproj
 
 Run the `DynamicNotch` scheme in Xcode. The project resolves its Swift packages.
 
+A Debug build and the test host use the bundle ID `com.kevster.DynamicNotch.debug`. They keep their own settings and privacy permissions, so they do not change those of the installed app.
+
 ## Releases
 
 Pushing a tag such as `v1.0.1` runs `.github/workflows/release.yml`. The workflow builds and signs the app with a Developer ID certificate. It notarizes the app and publishes a GitHub Release with a DMG and a zip. It then adds the release to the Sparkle appcast on the `gh-pages` branch. Installed copies read this appcast.
