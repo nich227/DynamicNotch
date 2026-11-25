@@ -3045,6 +3045,28 @@
         }
       }
     },
+    "settings.calendar.showAllDayEvents.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show events that last all day in the notch."
+          }
+        }
+      }
+    },
+    "settings.calendar.showAllDayEvents.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show all-day events"
+          }
+        }
+      }
+    },
     "settings.calendar.showCreatedEventsOnly.desc": {
       "extractionState": "manual",
       "localizations": {

@@ -25,6 +25,15 @@ final class LocalizationCatalogTests: XCTestCase {
         "settings.lockScreen.customSound.unavailableFallback"
     ]
 
+    func testAllDayEventsToggleHasEnglishText() {
+        for key in ["settings.calendar.showAllDayEvents.title", "settings.calendar.showAllDayEvents.desc"] {
+            let value = L10n.string(key, language: .english)
+
+            XCTAssertNotEqual(value, key, "\(key) is unresolved")
+            XCTAssertFalse(value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, "\(key) is empty")
+        }
+    }
+
     func testEveryLanguageShipsAnLprojDirectory() {
         for language in Self.translatableLanguages {
             let hasBundle = language.bundleLanguageCandidates.contains { candidate in

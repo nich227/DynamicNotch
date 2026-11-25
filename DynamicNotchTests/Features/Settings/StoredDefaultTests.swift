@@ -39,6 +39,15 @@ final class StoredDefaultTests: XCTestCase {
         XCTAssertFalse(store.isSoundAlertEnabled)
     }
 
+    func testTurningOffAllDayEventsWritesTheKeyThatTheCalendarReads() {
+        let store = CalendarSettingsStore(defaults: testDefaults)
+
+        store.showAllDayEvents = false
+
+        XCTAssertEqual(testDefaults.object(forKey: GeneralSettingsStorage.Keys.calendarShowAllDay) as? Bool, false)
+        XCTAssertFalse(CalendarSettingsStore(defaults: testDefaults).showAllDayEvents)
+    }
+
     func testCalendarSettingsStorePersistsChanges() {
         let store = CalendarSettingsStore(defaults: testDefaults)
 

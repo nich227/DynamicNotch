@@ -39,6 +39,17 @@ struct CalendarSettingsView: View {
 
             Divider().opacity(0.6)
 
+            SettingsToggleRow(
+                title: "settings.calendar.showAllDayEvents.title",
+                description: "settings.calendar.showAllDayEvents.desc",
+                systemImage: "sun.max",
+                color: .orange,
+                isOn: $settings.showAllDayEvents,
+                accessibilityIdentifier: "settings.activities.calendar.showAllDayEvents"
+            )
+
+            Divider().opacity(0.6)
+
             SettingsMenuRow(
                 title: "settings.calendar.noticeMinutes.title",
                 description: "settings.calendar.noticeMinutes.desc",
