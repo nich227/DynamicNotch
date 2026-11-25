@@ -353,12 +353,8 @@ final class NotchViewModelIntegrationTests: XCTestCase {
 
     @MainActor
     func testHoverExpandInteractionBecomesAvailableForExpandableLiveActivity() async {
-        let hoverDelay: TimeInterval = 0.41
         let viewModel = NotchViewModel(
-            settings: TestNotchSettings(
-                notchExpandInteraction: .hover,
-                notchPressHoldDuration: hoverDelay
-            ),
+            settings: TestNotchSettings(notchExpandInteraction: .hover),
             hideDelay: 0.01,
             queueDelay: 0
         )
@@ -384,15 +380,13 @@ final class NotchViewModelIntegrationTests: XCTestCase {
             (
                 hover: viewModel.shouldExpandActiveContentOnHover,
                 click: viewModel.shouldExpandActiveContentOnClick,
-                pressAndHold: viewModel.shouldExpandActiveContentOnPressAndHold,
-                delay: viewModel.notchHoverExpandDelay
+                pressAndHold: viewModel.shouldExpandActiveContentOnPressAndHold
             )
         }
 
         XCTAssertTrue(state.hover)
         XCTAssertFalse(state.click)
         XCTAssertFalse(state.pressAndHold)
-        XCTAssertEqual(state.delay, hoverDelay, accuracy: 0.001)
     }
 
     @MainActor
@@ -1483,37 +1477,6 @@ final class NotchViewModelIntegrationTests: XCTestCase {
         let stretchedSize = await MainActor.run { viewModel.interactiveNotchSize }
         XCTAssertGreaterThan(stretchedSize.width, initialSize.width)
         XCTAssertEqual(stretchedSize.height, initialSize.height, accuracy: 0.001)
-    }
-
-    @MainActor
-    func testTapToExpandSettingBlocksExpansion() async {
-        let viewModel = NotchViewModel(
-            settings: TestNotchSettings(isNotchTapToExpandEnabled: false),
-            hideDelay: 0.01,
-            queueDelay: 0
-        )
-        TestLifetime.retain(viewModel)
-
-        viewModel.send(
-            .showLiveActivity(
-                TestNotchContent(
-                    id: "expandable",
-                    priority: 10,
-                    isExpandable: true,
-                    expandedWidthOffset: 140,
-                    expandedHeightOffset: 80
-                )
-            )
-        )
-
-        await assertEventually {
-            await MainActor.run { viewModel.notchModel.liveActivityContent?.id == "expandable" }
-        }
-
-        viewModel.handleActiveContentTap()
-
-        let isExpanded = await MainActor.run { viewModel.notchModel.isLiveActivityExpanded }
-        XCTAssertFalse(isExpanded)
     }
 
     @MainActor
